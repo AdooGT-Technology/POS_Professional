@@ -1,4 +1,6 @@
 V27.5.9 — Manager Top Bar, POS Data Lists & Design References
+- Added a GitHub Actions release workflow that automatically builds a clean versioned ZIP and publishes it as a GitHub Release whenever a semantic V27 tag (vX.Y.Z) is created.
+- Release workflow validates VERSION.txt against the tag and excludes Git metadata, virtual environments, caches, logs, and build artifacts from the release ZIP.
 - Added a dedicated Design_References folder for UI/UX screenshots and visual references used during future design work.
 - Increased Manager top-bar navigation icons to a spacious 64x64 desktop size with clearer spacing and responsive reductions on smaller screens.
 - Top-bar dropdown menus now open automatically on hover and remain open while the pointer moves into the dropdown; they close shortly after leaving the menu area.
