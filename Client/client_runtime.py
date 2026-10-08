@@ -69,7 +69,7 @@ class ClientRuntime:
                 "device_type": self.cfg.get("device_type", "POS"),
                 "branch_id": self.cfg.get("branch_id"),
                 "warehouse_id": self.cfg.get("warehouse_id"),
-                "app_version": "V27.5.8-Client-WebView2",
+                "app_version": "V27.5.9-Client-WebView2",
                 "status": self.state if self.state in {"SYNCING", "ONLINE"} else "ONLINE",
                 "last_error": self.last_error,
             }, timeout=float(self.cfg.get("heartbeat_timeout", 3)))
