@@ -229,7 +229,7 @@ def run_webview_client(runtime) -> int:
         if not html_path.is_file():
             raise FileNotFoundError(html_path)
         window = webview.create_window(
-            "POS Professional V27.5.8 Client",
+            "POS Professional V27.5.9 Client",
             url=html_path.as_uri(),
             js_api=api,
             width=1600,
