@@ -63,7 +63,7 @@ from services import (
 )
 
 WEB_UI_DIR = Path(__file__).resolve().parent / "webui"
-APP_VERSION = "V27.5.7"
+APP_VERSION = "V27.5.9"
 
 MANAGER_MENU = [
     ("__HOME_DIRECT__", [("home", "⌂", "الرئيسية", "مركز التشغيل والملخص الحي")]),
