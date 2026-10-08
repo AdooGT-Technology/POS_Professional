@@ -3,6 +3,8 @@ name: Design References Visual Audit
 on:
   push:
     paths:
+      - '.github/workflows/design-visual-audit.yml'
+      - '.github/scripts/analyze_design_references.py'
       - 'Design_References/**/*.png'
       - 'Design_References/**/*.PNG'
       - 'Design_References/**/*.jpg'
