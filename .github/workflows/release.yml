@@ -1,0 +1,90 @@
+name: Release ZIP
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to package (for example v27.5.9)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release ZIP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tagged source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Resolve release tag
+        id: meta
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            TAG="${{ inputs.tag }}"
+          else
+            TAG="${GITHUB_REF_NAME}"
+          fi
+          if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $TAG"
+            exit 1
+          fi
+          VERSION="${TAG#v}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "zip_name=POS_Professional_V$VERSION.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Verify VERSION.txt
+        shell: bash
+        run: |
+          EXPECTED="${{ steps.meta.outputs.version }}"
+          ACTUAL="$(tr -d '\r\n[:space:]' < VERSION.txt)"
+          if [ "$ACTUAL" != "$EXPECTED" ]; then
+            echo "VERSION.txt ($ACTUAL) does not match tag version ($EXPECTED)."
+            exit 1
+          fi
+
+      - name: Build clean release ZIP
+        shell: bash
+        run: |
+          mkdir -p release
+          zip -r "release/${{ steps.meta.outputs.zip_name }}" . \
+            -x '.git/*' \
+               '.github/*' \
+               '.venv/*' \
+               '**/.venv/*' \
+               '__pycache__/*' \
+               '**/__pycache__/*' \
+               '*.pyc' \
+               '*.pyo' \
+               '*.log' \
+               'release/*' \
+               '**/node_modules/*' \
+               '**/.pytest_cache/*' \
+               '**/.mypy_cache/*' \
+               '**/.ruff_cache/*' \
+               '**/.DS_Store' \
+               '**/Thumbs.db'
+
+      - name: Create GitHub Release and upload ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.meta.outputs.tag }}
+          ZIP: release/${{ steps.meta.outputs.zip_name }}
+        shell: bash
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" "$ZIP" --clobber
+          else
+            gh release create "$TAG" "$ZIP" \
+              --title "POS Professional $TAG" \
+              --generate-notes
+          fi
