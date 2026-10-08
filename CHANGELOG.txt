@@ -1,3 +1,12 @@
+V27.5.9 — Manager Top Bar, POS Data Lists & Design References
+- Added a dedicated Design_References folder for UI/UX screenshots and visual references used during future design work.
+- Increased Manager top-bar navigation icons to a spacious 64x64 desktop size with clearer spacing and responsive reductions on smaller screens.
+- Top-bar dropdown menus now open automatically on hover and remain open while the pointer moves into the dropdown; they close shortly after leaving the menu area.
+- Fixed Manager POS/product/sales-style data pages failing to render because the shared simpleTable renderer was missing.
+- Added a resilient table renderer with Arabic column labels, status badges, numeric formatting, empty-state handling, and safe object values.
+- Updated Manager and Client runtime/version markers to V27.5.9.
+- V27.5.8 authentication behavior remains preserved.
+
 V27.5.8 — Client Login Screen Authentication
 - Client login is now a real authenticated UI state; the post-login workspace is inaccessible while logged out.
 - Prevented scrolling/visual exposure of the authenticated Client workspace before login.
