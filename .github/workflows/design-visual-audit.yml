@@ -49,9 +49,10 @@ jobs:
         run: python .github/scripts/analyze_design_references.py
 
       - name: Commit updated visual audit report
+        if: always()
         shell: bash
         run: |
-          if git diff --quiet -- Design_References/VISUAL_AUDIT.md; then
+          if [ -z "$(git status --porcelain -- Design_References/VISUAL_AUDIT.md)" ]; then
             echo "Visual audit report has not changed."
             exit 0
           fi
