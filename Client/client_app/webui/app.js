@@ -62,7 +62,7 @@ function applyProfile(){
   const player=$('player-name'); if(player) player.textContent=customer||'—';
   const sessionLabel=$('player-session-label'); if(sessionLabel) sessionLabel.textContent=customer?'جلسة نشطة':'تسجيل الدخول';
 }
-async async function afterLogin(){
+async function afterLogin(){
   if(!state.boot?.customer_name) throw new Error('لم يتم إنشاء جلسة عميل صالحة');
 
   const fn=safeApi('get_bootstrap'); if(!fn) throw new Error('دالة تحميل الواجهة غير متاحة');
