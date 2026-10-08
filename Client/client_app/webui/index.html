@@ -7,15 +7,15 @@
   <title>Client</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="client-logged-out">
   <div class="aurora aurora-a"></div>
   <div class="aurora aurora-b"></div>
   <div class="noise"></div>
 
-  <div id="login-view" class="login-screen">
+  <div id="login-view" class="login-screen" role="dialog" aria-modal="true" aria-label="تسجيل دخول العميل">
     <header class="client-login-topbar">
       <div class="client-top-brand"><div class="client-top-mark">GP</div><div><b class="brand-name">متجري</b><small>PLAY • CONNECT • WIN</small></div></div>
-      <div class="client-top-actions"><button type="button" class="client-lang">◎ العربية⌄</button><span class="client-online"><i></i> Online</span><span class="client-version">V27.5.7</span><button type="button" class="client-window" onclick="toggleFullscreen()">□</button><button type="button" class="client-window" onclick="safeApi('close')?.()">×</button></div>
+      <div class="client-top-actions"><button type="button" class="client-lang">◎ العربية⌄</button><span class="client-online"><i></i> Online</span><span class="client-version">V27.5.8</span><button type="button" class="client-window" onclick="toggleFullscreen()">□</button><button type="button" class="client-window" onclick="safeApi('close')?.()">×</button></div>
     </header>
     <div class="login-glow"></div>
     <div class="login-visual-copy"><div class="visual-badge">GAMING CENTER PRO</div><h2>PLAY<br><span>CONNECT</span><br>WIN</h2><p>ألعابك وتطبيقاتك وجلساتك في مكان واحد.</p><div class="visual-features"><span>⚡ أداء عالي<small>أقل زمن استجابة</small></span><span>🛡 أمان كامل<small>حماية بياناتك</small></span><span>☁ ألعاب متعددة<small>مكتبتك في مكان واحد</small></span></div></div>
@@ -39,7 +39,7 @@
     </section>
   </div>
 
-  <div id="home-view" class="client-shell" hidden>
+  <div id="home-view" class="client-shell" hidden aria-hidden="true">
     <header class="topbar">
       <div class="brand-zone">
         <div class="logo-wrap"><img id="logo" alt="" hidden></div>
