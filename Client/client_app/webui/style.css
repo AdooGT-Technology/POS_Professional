@@ -41,3 +41,13 @@ button,input{font:inherit}button{cursor:pointer}.aurora{position:fixed;z-index:-
 .login-panel{position:absolute;z-index:5;right:7vw;top:15vh;width:min(500px,38vw);max-height:76vh;overflow:auto;padding:34px 38px;border-radius:22px;background:linear-gradient(180deg,rgba(3,13,27,.96),rgba(2,8,18,.97));border:1px solid rgba(66,169,255,.36);box-shadow:0 30px 100px rgba(0,0,0,.55),0 0 40px rgba(22,123,255,.10)}.login-panel h1{font-size:32px}.login-panel .brand-lockup{margin-bottom:18px}.login-panel .brand-mark{display:none}.login-panel input{height:52px;background:rgba(4,15,29,.92);border-radius:10px}.primary-button{height:52px;border-radius:11px;background:linear-gradient(135deg,#0c9dff,#a640ff);color:#fff;box-shadow:0 10px 28px rgba(55,110,255,.20)}
 @media(max-width:1050px){.login-visual-copy{left:3vw;width:42vw}.login-panel{right:3vw;width:min(500px,48vw)}}@media(max-width:760px){.client-login-topbar{padding:0 14px;height:62px}.client-top-brand .brand-name,.client-top-brand small,.client-lang{display:none}.client-top-mark{width:42px;height:42px}.login-visual-copy{display:none}.login-panel{left:50%;right:auto;transform:translateX(-50%);top:90px;width:min(520px,92vw);max-height:calc(100vh - 105px)}}
 /* V27.5.7: smaller icon-first Manager navigation */
+
+/* V27.5.8 — Authentication state isolation */
+html,body{width:100%;min-height:100%;}
+html.client-logged-out,body.client-logged-out{overflow:hidden!important;height:100dvh;}
+#login-view[hidden],#home-view[hidden]{display:none!important;}
+body.client-logged-out #home-view{display:none!important;visibility:hidden!important;pointer-events:none!important;position:fixed!important;inset:-10000px!important;}
+body:not(.client-authenticated) .client-shell{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+body.client-authenticated #login-view{display:none!important;visibility:hidden!important;pointer-events:none!important;}
+body.client-authenticated{overflow:auto;}
+.login-screen{height:100dvh;max-height:100dvh;overflow:hidden!important;overscroll-behavior:none;}
