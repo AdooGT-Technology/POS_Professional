@@ -1,0 +1,18 @@
+{
+  "server_url": "",
+  "auto_discover": true,
+  "discovery_timeout": 1.5,
+  "heartbeat_timeout": 3,
+  "device_id": "2a172efd-8092-4769-865d-c7bb61bcd662",
+  "device_name": "cc6ff8dec783",
+  "device_type": "CLIENT",
+  "branch_id": null,
+  "warehouse_id": null,
+  "heartbeat_seconds": 5,
+  "client_id": "2a172efd-8092-4769-865d-c7bb61bcd662",
+  "usb_monitor_enabled": true,
+  "usb_poll_seconds": 2.0,
+  "kiosk_mode": false,
+  "kiosk_frameless": false,
+  "ui_refresh_seconds": 10
+}

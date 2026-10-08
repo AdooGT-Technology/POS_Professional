@@ -1,0 +1,301 @@
+V27.5.7 — Full Manager UI/UX redesign + performance optimization
+
+- Rebuilt the Manager visual system as one coherent layout: separated store branding, icon-only primary navigation, compact dropdown groups, and search inside the top action bar beside Settings.
+- Removed the live legacy sidebar markup entirely; the top navigation is now the single primary navigation surface.
+- Redesigned Home around the supplied gaming-admin reference: compact KPI cards, device table, status/activities/quick-actions column, restrained borders and professional spacing.
+- Unified Devices/Hardware into one dense card per device; hardware remains inside the device surface with compact icon/value presentation and integrated Health/Sync/Queue/Physical Disks.
+- Kept Client Studio as a three-pane designer with one Live Preview only; Server-hosted assets remain the source of truth.
+- Replaced conflicting CSS override layers with one authoritative V27.5.7 UI layer; removed heavy backdrop blur/glow usage and reduced animation/paint cost for WebView2.
+- Added a lightweight Server device-summary API that omits Client Studio catalogs, banners and screen snapshots from the normal device list.
+- Manager Devices/Home/Hardware now consume the lightweight summary API instead of the heavy per-device control-state endpoint.
+- Product catalog loading is now lazy and requested only when a Client purchase action needs it.
+- USB dashboard calls are fetched in parallel instead of six sequential requests.
+- Client Studio loads selected/default profiles in parallel.
+- Manager startup loads the shell, Home and server status in parallel; cached modules render immediately before refresh (stale-while-revalidate behavior).
+- Removed repeated blocking Server probes from connection-status polling; background heartbeat is cached and UI polling is relaxed to 10 seconds.
+- Preserved Server / Manager / Client architecture and the project boundary that excludes Diskless/iSCSI/PXE/PXI/WriteBack/Cache.
+
+V27.5.3
+- Esports now uses real provider integrations: HenrikDev public VALORANT leaderboard, Riot Games League of Legends API support, and PandaScore esports feed support. Automatic provider refresh runs every 15 minutes when a real provider is configured; no fake leaderboard rows are generated.
+- Added Esports "Sync All" endpoint/action and clearer provider/API-key readiness status.
+- Fixed Customize Client global-save HTTP/JSON failure: the Server global endpoint was missing ClientUIProfile import, causing HTTP 500 and the Manager JSONDecodeError.
+- Client Studio assets now show real Server-hosted thumbnails/previews for logo, background, video, main image and section icons; uploaded assets are normalized to absolute Server URLs in Manager.
+- Compact Client Studio asset controls and icon tiles; preview background/logo/main image/icons now load from saved Server profile.
+- Manager top bar reorganized: right-side actions occupy the upper row and global search is moved to a dedicated lower row.
+- Settings icon tabs reduced to compact icon-only controls with smaller borders/radii and no duplicate icon frames.
+- Home is now a single direct navigation item with no empty submenu; POS/Inventory pages show explicit data state/counts instead of an indefinite fetching message.
+- Unified Devices view remains the single device surface; hardware metrics use compact icon/value presentation without oversized frames.
+- Preserved Server / Manager / Client architecture and kept Diskless/iSCSI/PXE/PXI/WriteBack/Cache outside this project.
+
+V27.4.9
+- أضاف Server Game Library نسخة اختبارية من ألعاب/تطبيقات كتالوج Client: VALORANT وFortnite وPUBG Mobile وCounter-Strike 2، مع Steam وDiscord وEpic Games.
+- أضاف أصول اختبار حقيقية للمعاينة (Poster 180x240 وIcon 64x64) وحفظها داخل Server/client_assets وربطها تلقائيًا بواجهة Client.
+- Client Bootstrap أصبح يدمج ألعاب Game Library المركزية مع عناصر Client Studio، مع منع التكرار وإبقاء الصور والأيقونات القادمة من Server.
+- حسّن Game Library Add/Edit Live Preview لعرض الاسم والتصنيف والغلاف والأيقونة مباشرة قبل الحفظ.
+- أعاد تسمية واجهة Manager المرئية من Clients إلى الأجهزة، مع الإبقاء على أسماء API الداخلية والتوافق البرمجي.
+- حوّل القوائم الجانبية إلى مجموعات منسدلة بأيقونات، وأضاف وصفًا عند تمرير المؤشر وحركة/إضاءة حية للأيقونات.
+
+V27.4.4
+- Removed the legacy Client-side administration/PIN surface completely: no admin panel, PIN, Ctrl+Shift+A shortcut, or admin bridge methods remain. Manager is the only administration surface.
+- Client face now consumes Manager/Server Client Studio profile centrally: logo, background, video, main image, colors, welcome text, profile badge, section visibility and icons.
+- Added visible customer-facing sections for Store, Purchases, Wallet, Rewards, Events, Profile and Personal Files.
+- Added a faithful Login/Home Client Face preview in Manager Customize Client.
+- Legacy admin PIN keys are stripped from upgraded Client configuration at runtime.
+
+V27.4.4
+- إصلاح Manager USB: الاستجابة غير JSON من Central Server لم تعد تسبب JSONDecodeError داخل pywebview؛ تظهر رسالة تشخيص واضحة بدل traceback.
+- Clients/Client Control/Hardware remain unified from V27.4.2.
+- إصلاح وجه Client: شعار Client Studio أصبح يظهر على شاشة العميل، والخلفية وMain Image تطبق فعليًا على شاشة الدخول والواجهة بعد تحميل profile من Server.
+- إزالة زر PIN/الإعدادات الظاهر من وجه العميل؛ لوحة الإدارة لا تظهر للزبون وتبقى عبر اختصار الإدارة المخفي.
+- تحديث عناوين وmarkers إلى V27.4.4.
+
+V27.4.2 — Unified Clients workspace
+- Clients, Client Control and Hardware Monitor are merged into one Clients screen; the main navigation no longer exposes duplicate Client Control/Hardware entries.
+- Clients list is the primary time/session/balance management view, with device names as the main rows.
+- Hardware is shown as small CPU/GPU/RAM/Disk/Network icons beside each device; selected-device details open in a side panel.
+- Side panel contains time, balance, money/purchases/offers actions, temperatures, RAM speed, disk health, LAN, GPU/VRAM, Health/Sync/Queue and physical disk details.
+
+V27.4.2 — Game Library Working Directory + Poster/Icon Preview
+- Game/Program editor now keeps Poster and Icon visible together in the live preview, matching the final right-side preview shape.
+- Existing Poster/Icon are shown while editing; newly selected files update their own preview layer without replacing the other asset.
+- Selecting a Game Folder automatically sets Working Directory to that folder.
+- Selecting an EXE automatically sets Working Directory to the EXE parent folder when it is still empty.
+- Right-side Game Library preview keeps a prominent Edit Game/Program action after the item is saved/selected.
+
+V27.4.1 — Client Control / Pricing / Game Library
+- Client Control redesigned as compact GRM-style rows with small status + Hardware indicators beside each Client.
+- Hardware summary (CPU/GPU/RAM/Disk) is visible beside each device and full telemetry remains in the selected Client panel.
+- Removed manual session time / hourly-rate entry from Manager Client Control. Session pricing is now edited only from Settings.
+- Added server-backed session pricing settings and automatic money-to-time calculation; Manager actions are now Add Money, Purchases and Offers.
+- Purchases create a real POS sale/invoice first, then debit the selected Client balance through the Server runtime.
+- Game/Program editor now supports GAME vs APP, auto-fills Working Directory from the selected game folder, and preserves it on save.
+- Game preview now shows poster + icon in a matching preview card, with Edit Game/Program visible on the right after saving.
+- Next patch remains based directly on V27.4.0; no Dashboard and no Diskless/iSCSI/PXE/WriteBack/Cache were added.
+
+V27.4.0 — Manager connectivity, module reliability, permissions, audit, database center
+- Fixed the persisted Manager Central Server address from legacy 127.0.0.1:38797 to the real Server port 8787.
+- Added automatic migration of legacy Manager configs containing port 38797.
+- Removed Settings from the main sidebar; Settings is now a compact top-bar dropdown with small icon shortcuts.
+- Removed the Manager cancellation-request/void workflow from navigation and UI; Returns remains the canonical return workflow.
+- Added database connection/status diagnostics to the Database Center.
+- Added Audit Trail chain verification and audit entries for settings and permission changes.
+- Made Users & Permissions directly editable from the user list.
+- Added a clear Central Server offline state for Server-backed modules.
+- Updated Manager/Server/Client release markers to V27.4.0.
+
+V27.3.9
+- Server no longer auto-opens 127.0.0.1/Dashboard pages.
+- Manager-Client now has device status map, Hardware Monitor, remaining-time clock, and time/money controls.
+- USB pricing tiers are separated from per-Client usage policy.
+- General Settings uses compact icon-only navigation with tooltips.
+- Customize Client uses the same asset picker/upload path as Game Library and fixes async asset upload.
+- Client customer face hides the admin PIN/control icon; Client Interface applies server-controlled icons and section visibility.
+- Deprecated pywebview dialog constants removed.
+
+
+V27.3.5 — Manager Gizmo shell + navigation recovery + branding
+- إصلاح renderModule المركزي وsimpleTable وإصلاح مسارات الإضافة/النقر للوحدات.
+- إصلاح ظهور حالة Server في شاشة الدخول نفسها وفي Manager بعد الاتصال.
+- إضافة اسم المحل وLogo قابل للرفع والحفظ والظهور في شاشة دخول Manager والواجهة العلوية.
+- نقل الإعدادات إلى زر ⚙ بجانب تسجيل الخروج وتجميعها في تبويبات أفقية Responsive.
+- إعادة USB Monitor إلى مركز تسعير فعلي: تفعيل/تعطيل، سعر أساسي، ضريبة، حد أدنى، GB مجانية، جلسة مجانية، وشرائح 10–1000 GB.
+- إصلاح Client renderModule compatibility.
+- تحديث Database إلى مسمى "قاعدة البيانات" مع إبقاء Backup / Restore / Merge / Migration في مركز واحد.
+- تحديث الشكل العام ليقترب من Gizmo Manager مع responsive auto-collapse.
+- V27.3.5 does not reintroduce Diskless/iSCSI/PXI/PXE/WriteBack/Cache; those remain خارج هذا المشروع.
+
+
+V27.3.4 — Workspace cleanup, responsive Manager UX, USB pricing, Database, Permissions
+- Removed Diskless/iSCSI/PXI/PXE/WriteBack/Cache implementation from the POS project; this is now a separate project boundary.
+- Removed Diskless routes/services/menu entries and Client Diskless agent code. Existing database tables are left untouched for data safety but are no longer part of the application ORM/features.
+- Hardened Manager navigation with capture-phase click routing for nav/action controls.
+- Removed low-value per-module “module settings” controls.
+- Reorganized General Settings into side-by-side responsive tabs: System, Operations/Printing, Customize Client, Security/Session.
+- USB pricing defaults support 10–1000 GB tiers with compact selection and enable/disable policy support.
+- Customize Client remains Gizmo-inspired with responsive designer + live preview.
+- Database is the single label for Backup/Restore/Merge/Migration; removed the unused “strict settings” UI.
+- Users & Permissions retained as a dedicated functional module with edit/permission controls.
+- Manager UI now collapses fluidly across widths/resolutions.
+
+V27.3.3 — Manager Control/UX + USB Pricing + Client Control + LAN Telemetry + Database Center
+- Manager: all generated navigation items now have direct click bindings in addition to delegated handling, preventing dead menu buttons in WebView2.
+- Manager: implemented the missing Client Control Center renderer and working Client selection/commands.
+- Manager: restored a real Clients fleet page with live status, CPU/GPU/RAM and LAN indicators.
+- Manager: LAN indicator is yellow at 100 Mbps and green at 1000 Mbps.
+- Manager: Hardware Monitor and Client Control now surface LAN speed/adapter telemetry.
+- Manager: USB pricing settings now expose independent editable tiers every 10 GB from 10 GB through 1000 GB, plus base price, tax, minimum charge and free GB.
+- Manager: Customize Client live preview now reacts immediately to style, visibility, layout and local asset changes; General Settings preview is also live.
+- Manager: Database Center now exposes Backup, Restore latest, Merge and Migration actions together with the database path and recovery history.
+- Server/Client: added LAN speed/adapter telemetry with additive database migration.
+- Client: added Admin Settings gear to the top bar, kept admin settings outside customer credentials, and added bottom-left connection/version indicator.
+- Client: startup/login flow now falls back cleanly to customer Login when Server is unavailable instead of leaving the UI trapped.
+
+
+V27.3.2 — Manager navigation + Client first-run/login recovery
+- Manager: fixed navigation buttons so every generated menu item opens its module on click.
+- Manager: added modal close binding for dynamically used modal workspace.
+- Client: admin settings now return explicitly to the customer login screen after successful server connection.
+- Client: added a dedicated “return to client login” action from Admin Settings.
+- Client: successful admin configuration clears customer session state and restores the customer login flow without requiring the operator to remain inside Settings.
+- Client: failed server connection remains in Admin Settings with a clear connection error instead of falsely entering the customer area.
+V27.3.1 — Major Client / Manager / Diskless / Game Library / Database UX release
+- Client: fixed pywebview authenticate positional-argument mismatch; customer login now sends one stable payload and legacy positional calls remain compatible.
+- Client: added working post-login workspace sections and protected Admin Settings panel outside customer credentials.
+- Client: server-side UI assets now enrich all logo/background/video/main-image/section-icon assets automatically.
+- Manager: Task Studio uses task-type-specific workflow and professional pipeline selectors.
+- Manager: Diskless Server defaults to iSCSI/VHD architecture; SMB is no longer the default transport.
+- Manager: Diskless speed-test no longer asks for a typed Game Disk ID.
+- Manager: Customize Client is now nested under General Settings.
+- Manager: Database/Backup/Migration center upgraded with strict safety indicators and policy controls.
+- Manager: Game Library remains the central professional library with groups, deployment/save/shader/license-ready fields and live preview.
+
+V27.2.9
+- Reordered Manager navigation: Home -> Client -> Hardware Monitor, then related groups.
+- Consolidated duplicate POS, cash/shift, inventory/transfer, and database/backup/migration navigation.
+- Hardware Monitor upgraded to compact UX gauges and owns Health/Sync/Queue.
+- USB pricing tiers now use selectable thresholds from 5GB to 1000GB.
+- Game Library and Task Library editors upgraded with structured Gizmo-style workflows.
+- Local game poster/icon assets are uploaded to Server storage with live preview.
+- Customize Client fieldBox fixed and login connection settings moved behind admin gear.
+
+V27.2.8
+- Unified Manager navigation: Home first, then Client, then Hardware Monitor.
+- Unified Cashier with invoices/sales, expenses, shifts and cash movements; removed duplicate canonical menu entries.
+- Unified Inventory with stock and inventory transfers; removed duplicate canonical menu entries.
+- Unified Database / Backup / Restore / Migration workspace.
+- Fixed Customize Client `fieldBox is not defined`.
+- Hardened Diskless physical-disk discovery against Server timeouts and made Diskless loading non-blocking with Promise.allSettled.
+
+V27.2.8
+- Fixed Manager startup boot screen stuck on “جاري تجهيز مساحة المدير…” by adding bounded API initialization and automatic login fallback.
+- Manager UI now always transitions from boot to Login when pywebview API is unavailable, slow, or fails.
+- Prevented startup context/connection delays from leaving the Manager workspace visually frozen.
+
+V27.2.5
+- Restored a distinct Home (الرئيسية) workspace and dedicated Clients list.
+- Added a dedicated Hardware Monitor with CPU/GPU/RAM/Disk telemetry, RAM speed, temperatures, disk health and per-disk details.
+- Health / Sync / Queue are integrated directly into Hardware Monitor per selected Client.
+- Diskless CACHE/WRITEBACK storage selection now uses server physical disks/volumes instead of arbitrary paths; per-client folders are created as <ClientName>_<IP>.
+- Rebuilt Task Library with a Gizmo-style tree + property editor + pipeline view.
+- Rebuilt Game Library with Gizmo-style tree/detail/preview structure and richer game profile fields.
+- Rebuilt Customize Client with a three-pane designer, live preview, editable sections/items/banners, and local file/folder upload/copy controls.
+- Asset/icon/banner inputs no longer require manually entered URLs.
+- Patch is based directly on V27.2.4; no older version was used as a feature fallback.
+- Added editable section icons (Games/Apps/Shop/Events/Ads/Files/Profile) with server-side asset storage and live preview.
+- Added additive DB migration for Client UI section icon assets.
+V27.3.4 validation — Python compileall PASS; Manager/Client JS syntax PASS; regression 10/10 PASS; Manager API import PASS; Server API import PASS.
+
+
+V27.3.6 — Manager connection, unified Client Control/Hardware, functional Game/Task libraries, Client branding and settings actions
+- Server connection probe now uses /health + heartbeat and defaults safely to localhost when no server URL is configured.
+- Gaming Center Pro replaced by configurable store branding and logo on Manager/Client login.
+- Hardware Monitor merged into Client Control + Hardware; duplicate navigation removed.
+- Game Library and Task Library now have real persistent Server endpoints and working add/edit/delete flows.
+- Game add editor now supports poster/icon upload, game folder, executable, working directory, arguments and live preview.
+- Settings received compact icon tabs and Save / Apply / Cancel actions.
+- Client receives store name/logo from Server and updates its login/home branding.
+- Diskless/iSCSI/PXI/PXE/WriteBack/Cache remain outside this project.
+
+
+V27.3.8 — verified rebuild after V27.3.6 feedback
+- Health-first Manager Server connection status.
+- Store name/logo branding for Manager and Client login.
+- Customer Client login no longer uses a PIN; PIN remains Admin-only.
+- Unified responsive Gizmo-style workspace and reliable event routing.
+- USB pricing policy: enable/disable, base price, tax, minimum, free GB/session, selectable 10–1000 GB tiers.
+- Game Library native folder/EXE picker, cover/icon upload and live preview.
+- Save / Apply / Cancel actions.
+- Hardware Monitor + Client Control unified.
+- Diskless/iSCSI/PXE/PXI/WriteBack/Cache remain excluded as a separate project.
+
+V27.3.8 — UI layout, Task selectors, and WebView dialogs
+- Inner navigation groups and settings tabs now stack vertically; primary sidebar remains the main navigation.
+- Task type and trigger are dropdown selectors; command field adapts for EXE, Windows Service, and Notification. EXE selection uses native file picker.
+- Save / Apply / Cancel controls are icon-only with accessible titles.
+- Updated pywebview file dialog API with backward-compatible fallback.
+- POS and inventory module routes are retained; regression checks added for module data/render wiring.
+
+
+V27.4.5
+- Game Library image normalization: uploaded game/program icons are resized/cropped to exactly 64x64 before server upload.
+- Game Library poster images are resized/cropped to exactly 180x240 before server upload.
+- Live Game Library preview now uses the 180x240 portrait poster area and 64x64 icon overlay.
+- Uploaded asset filenames identify the normalized dimensions.
+
+V27.4.7
+- Client WebView2 launch fixed for legacy Server catalog IDs (`legacy-game:*` and `legacy-app:*`).
+- Legacy catalog entries now route through the existing v15 launch endpoint instead of being incorrectly parsed as numeric Game Library IDs.
+- Added a regression test covering Valorant-style legacy game IDs and Steam-style legacy app IDs.
+- Updated active application version markers to V27.4.7.
+
+V27.4.9
+- Hardened Client WebView2 launch parsing so legacy-game:* and legacy-app:* identifiers are resolved before any numeric conversion.
+- Added a dedicated legacy catalog launcher and case-insensitive legacy prefix handling.
+- Numeric Game Library IDs now use an explicit digits-only check, preventing the reported int(value) traceback for legacy catalog entries.
+- Preserved existing v15 legacy launch routing and v18 numeric launch routing.
+
+
+V27.5.0
+- الأجهزة أصبحت تبويبات/بطاقات مستقلة، والـHardware الكامل يظهر داخل تبويب كل جهاز وليس في لوحة منفصلة بجانبه.
+- دمج Health / Sync / Queue وPhysical Disks داخل قسم Hardware لكل جهاز.
+- إضافة عرض CPU/GPU/RAM/Disk/VRAM/Network والحرارة والصحة والأقراص الفيزيائية في نفس بطاقة الجهاز.
+- إضافة مركز تسعير مستقل بأيقونة داخل الإعدادات العامة، مع طريقة التسعير بالساعة/الدقيقة، الحد الأدنى، التقريب، السماح، الضريبة، الذروة ودقائق العروض.
+- إضافة شرح Tooltip للخانات المهمة في التسعير.
+- تطبيق إعدادات التسعير والحفظ بدون إعادة تحميل واجهة Manager بالكامل.
+- تحسين تجربة القوائم لتجنب إعادة بناء الشاشة بعد الحفظ/التطبيق في الإعدادات.
+
+
+V27.5.1 — Manager UI / Game Editor / Real Esports Ranking
+- Reworked Manager navigation as collapsible icon-first groups with animated/live icons and hover descriptions for every menu item; settings keep the same icon rail with live tooltip feedback.
+- Added softRefresh(): save/apply operations update only the active Manager workspace data without showing the full loading screen or rebuilding the whole Manager shell.
+- Converted the affected USB, Esports, Game Library, Task Library, inventory, client customization, policy and entity mutations to soft refresh behavior.
+- Fixed Game Library editor asset handling: uploaded poster/icon URLs are converted to Central Server absolute URLs for reliable live preview, and existing poster/icon values are preserved when editing without selecting a new image.
+- Kept live Game Editor preview synchronized for name/type/category and 64x64 icon + 180x240 poster.
+- Added a real VALORANT ranking integration through HenrikDev public API (v3 leaderboard) with a seeded HenrikDev provider and VALORANT linked to it; leaderboard rows normalize player name/tag, rank and RR.
+- HenrikDev sync failures are recorded in the existing Esports Sync Logs instead of silently using fake ranking data.
+- No Diskless/iSCSI/PXE/PXI/WriteBack/Cache functionality was added.
+
+
+V27.5.2
+- Manager sidebar rebuilt as compact icon-first collapsible groups; every group/item has a live hover description and animated icon without oversized frames.
+- Manager Home redesigned closer to the supplied “Admin home.png” reference: compact top summary, device table, status donut, quick actions, activity cards.
+- Hardware cards now show icon + value only; labels moved to tooltips.
+- Game Library editor now has one Folder path only; Working Directory is derived from the selected game folder.
+- Game Library save uses patch semantics so editing without a new poster/icon never deletes existing media.
+- Client Customize now uses a global Default Client profile; selecting a specific Client is no longer required just to save the design.
+- Client asset upload now correctly consumes the native Manager file-picker path; each asset has one “choose + save automatically” action with no duplicate upload buttons.
+- Client background/image inputs use explicit media filters while native selection remains supported.
+- Client login face redesigned closer to supplied “Login Client.png” reference: top chrome, online/version controls, left gaming visual area, right secure login panel.
+- Default Client profile inheritance added on Server so global customization is available to all Clients while device-specific profiles remain supported.
+- VALORANT Esports ranking remains wired to HenrikDev public leaderboard v3.
+
+- Global Client Studio save now propagates visual settings to existing Client profiles and preserves previously stored assets/icons.
+- Native background/image pickers now use media-specific file filters instead of showing every file type.
+
+
+V27.5.4 — Manager Top Navigation Correction
+- Moved all Manager sidebar navigation groups into the top bar as horizontal dropdown menus.
+- Removed the duplicate/legacy sidebar from the active desktop layout.
+- Kept Home as one direct top-bar item; grouped modules appear only once.
+- Moved the global search into a dedicated full-width row below the top navigation.
+- Reduced top navigation icon framing and preserved compact hover/active states.
+- Added responsive horizontal scrolling for top navigation on narrower screens.
+
+V27.5.5 — Unified Manager UI/UX correction
+- Rebuilt the Manager shell header into one coherent 2-row layout: brand on the right, primary navigation centered, actions on the left, and search on its own full-width row below.
+- Removed the legacy sidebar navigation source entirely from rendering to prevent duplicated menus.
+- Top navigation now closes other dropdown groups when opening a group, keeps the active state, and uses a consistent compact dropdown grid.
+- Redesigned Settings tabs as compact icon + label pills instead of five oversized empty boxes.
+- Tightened Settings cards, Client designer asset frames, and Client preview borders to keep decoration proportional to the actual icon/image.
+- Added responsive header behavior for tablet/mobile widths without reintroducing the old sidebar.
+- No Diskless/iSCSI/PXE/PXI/WriteBack/Cache functionality added.
+
+
+V27.5.6 — Top Bar + Client Face Live Preview
+- Top-level Manager navigation is now icon-only in the top bar; labels remain available through tooltips and inside dropdown items.
+- Moved the global search into the top actions area beside Settings/utility icons; removed the separate search row.
+- Reserved a dedicated brand area so navigation/search/actions cannot overlap the store logo or store name.
+- Removed Login/Home preview-switch buttons from Customize Client; the right-side Client Face is now a single continuous LIVE preview.
+- Fixed live preview synchronization so persisted Server assets (logo, background, video, main image and section icons) are not overwritten by CSS refreshes.
+- Live preview now updates stored media and style fields without requiring preview-mode buttons.
+- Client asset save uses the global profile endpoint when available, preserving the default profile behavior.

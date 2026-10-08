@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050914">
+  <title>Client</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="aurora aurora-a"></div>
+  <div class="aurora aurora-b"></div>
+  <div class="noise"></div>
+
+  <div id="login-view" class="login-screen">
+    <header class="client-login-topbar">
+      <div class="client-top-brand"><div class="client-top-mark">GP</div><div><b class="brand-name">متجري</b><small>PLAY • CONNECT • WIN</small></div></div>
+      <div class="client-top-actions"><button type="button" class="client-lang">◎ العربية⌄</button><span class="client-online"><i></i> Online</span><span class="client-version">V27.5.7</span><button type="button" class="client-window" onclick="toggleFullscreen()">□</button><button type="button" class="client-window" onclick="safeApi('close')?.()">×</button></div>
+    </header>
+    <div class="login-glow"></div>
+    <div class="login-visual-copy"><div class="visual-badge">GAMING CENTER PRO</div><h2>PLAY<br><span>CONNECT</span><br>WIN</h2><p>ألعابك وتطبيقاتك وجلساتك في مكان واحد.</p><div class="visual-features"><span>⚡ أداء عالي<small>أقل زمن استجابة</small></span><span>🛡 أمان كامل<small>حماية بياناتك</small></span><span>☁ ألعاب متعددة<small>مكتبتك في مكان واحد</small></span></div></div>
+    <section class="login-panel">
+      <div class="brand-lockup">
+        <img id="login-logo" class="login-brand-logo" alt="" hidden>
+        <div class="brand-mark">GP</div>
+        <div>
+          <div class="brand-name">متجري</div>
+          <div class="brand-tag">PLAY • CONNECT • WIN</div>
+        </div>
+      </div>
+      <div class="login-badge" id="login-badge">SECURE GAMING ACCESS</div>
+      <h1>ابدأ جلستك</h1>
+      <p>سجّل الدخول للوصول إلى الألعاب والتطبيقات والمحتوى المخصص لهذا الجهاز.</p>
+      <label>اسم العميل<input id="customer-name" autocomplete="off" placeholder="مثال: Ahmed"></label>
+      <button id="login-button" class="primary-button" type="button">دخول إلى المنصة</button>
+      <div id="login-error" class="error"></div>
+      <div class="login-foot"><span>CLIENT ID</span><b id="device-id">—</b></div>
+      <div id="bridge-status" class="bridge-status">جاري تجهيز واجهة العميل…</div>
+    </section>
+  </div>
+
+  <div id="home-view" class="client-shell" hidden>
+    <header class="topbar">
+      <div class="brand-zone">
+        <div class="logo-wrap"><img id="logo" alt="" hidden></div>
+        <div class="brand-copy">
+          <div class="brand-name-small">متجري</div>
+          <div id="welcome" class="brand-sub">PLAY • CONNECT • WIN</div>
+        </div>
+      </div>
+      <div class="top-search">
+        <span class="search-icon">⌕</span>
+        <input id="global-search" placeholder="ابحث عن لعبة أو تطبيق…" autocomplete="off">
+      </div>
+      <div class="session-zone">
+        <div class="session-player"><span class="live-dot"></span><div><b id="player-name">—</b><small id="player-session-label">جلسة نشطة</small></div></div>
+        <button class="icon-button" onclick="toggleFullscreen()" title="ملء الشاشة">⛶</button>
+        <button class="icon-button" onclick="refreshUI()" title="تحديث">↻</button>
+        <button class="logout-button" onclick="logout()">خروج</button>
+      </div>
+    </header>
+
+    <div class="workspace">
+      <aside class="sidebar panel">
+        <div class="sidebar-title">التنقل</div>
+        <button class="side-link active" data-section="games" onclick="showSection('games')"><span>⌁</span><b>الألعاب</b></button>
+        <button class="side-link" data-section="apps" onclick="showSection('apps')"><span>◈</span><b>التطبيقات</b></button>
+        <button class="side-link" data-section="shop" onclick="showSection('shop')"><span>▦</span><b>المتجر</b></button>
+        <button class="side-link" data-section="purchases" onclick="showSection('purchases')"><span>◫</span><b>مشترياتي</b></button>
+        <button class="side-link" data-section="wallet" onclick="showSection('wallet')"><span>◉</span><b>المحفظة</b></button>
+        <button class="side-link" data-section="rewards" onclick="showSection('rewards')"><span>✦</span><b>المكافآت</b></button>
+        <button class="side-link" data-section="events" onclick="showSection('events')"><span>✦</span><b>الفعاليات</b></button>
+        <button class="side-link" data-section="profile" onclick="showProfile()"><span>◎</span><b>ملفي</b></button>
+        <button class="side-link" data-section="files" onclick="showFiles()"><span>⌁</span><b>ملفاتي</b></button>
+        <div class="sidebar-spacer"></div>
+        <div class="connection-card">
+          <span class="live-dot"></span>
+          <div><small>حالة الاتصال</small><b id="connection-text">متصل</b></div>
+        </div>
+        <div class="promo-card"><strong>Next Level</strong><span>Your Gaming Experience</span><small>Powered by Central Server</small></div>
+      </aside>
+
+      <main class="main-content">
+        <div class="hero panel">
+          <div>
+            <div class="eyebrow" id="client-face-badge">PLAYER SPACE</div>
+            <h1 id="hero-title">مرحبًا</h1>
+            <p id="hero-sub">اختر لعبتك وابدأ الآن.</p>
+          </div>
+          <div class="hero-actions">
+            <button class="hero-chip active" onclick="showSection('games')">كل الألعاب</button>
+            <button class="hero-chip" onclick="showSection('apps')">التطبيقات</button>
+            <button class="hero-chip" onclick="showProfile()">الملف الشخصي</button>
+          </div>
+        </div>
+
+        <div id="ads" class="ads-row" hidden></div>
+
+        <div class="section-toolbar">
+          <div class="categories" id="categories"></div>
+          <div class="view-tools"><button class="tool active" onclick="setGridMode('grid')">▦</button><button class="tool" onclick="setGridMode('list')">☷</button></div>
+        </div>
+
+        <section class="catalog panel">
+          <div class="section-head">
+            <div><div class="eyebrow">LIBRARY</div><h2 id="section-title">الألعاب</h2><p id="section-sub">العناصر المتاحة على هذا الجهاز</p></div>
+            <div class="catalog-state"><span class="status-dot"></span><span id="catalog-count">0 عنصر</span></div>
+          </div>
+          <div id="cards" class="cards"></div>
+        </section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="rail-card panel">
+          <div class="rail-title"><span>★</span><h3>الألعاب المفضلة</h3></div>
+          <div id="favorites" class="favorites"></div>
+        </section>
+        <section class="rail-card panel">
+          <div class="rail-title"><span>⌕</span><h3>البحث والتصفية</h3></div>
+          <div class="filter-stack">
+            <input id="side-search" placeholder="ابحث عن لعبة…" autocomplete="off">
+            <button onclick="filterCategory('ALL')">كل التصنيفات</button>
+            <button onclick="filterCategory('ONLINE')">ألعاب Online</button>
+            <button onclick="filterCategory('OFFLINE')">ألعاب Offline</button>
+          </div>
+        </section>
+        <section id="selected-panel" class="rail-card panel" hidden>
+          <div class="rail-title"><span>✦</span><h3>معلومات اللعبة</h3></div>
+          <div id="selected-game"></div>
+        </section>
+      </aside>
+    </div>
+
+    <footer class="statusbar panel">
+      <div><span class="footer-icon">◌</span><b>التطبيق يعمل بشكل طبيعي</b></div>
+      <div class="metrics"><span>CPU <b>34%</b></span><span>RAM <b>48%</b></span><span>GPU <b>42%</b></span><span>Disk <b>27%</b></span></div>
+      <div class="client-health"><span id="footer-connection-dot" class="status-dot"></span><span id="footer-connection-text">Client Online</span><span class="client-version">V27.5.7</span></div>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

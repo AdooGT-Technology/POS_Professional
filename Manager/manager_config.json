@@ -1,0 +1,12 @@
+{
+  "server_url": "http://127.0.0.1:8787",
+  "auto_discover": true,
+  "discovery_timeout": 1.5,
+  "heartbeat_timeout": 3,
+  "device_id": "97340aa8-949d-4bb6-9455-914c2006947d",
+  "device_name": "e21dc8b544b1-MANAGER",
+  "device_type": "MANAGER",
+  "heartbeat_seconds": 5,
+  "server_ip": "127.0.0.1",
+  "server_port": 8787
+}

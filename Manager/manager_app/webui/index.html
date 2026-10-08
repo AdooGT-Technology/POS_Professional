@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="boot" class="boot"><div class="boot-card"><img class="brand-store-logo boot-logo" src="" alt=""><div class="mark">M</div><b class="brand-store-name">Manager</b><span>جاري تجهيز مساحة المدير…</span></div></div>
+<section id="login" class="login-screen hidden">
+  <div class="login-art"></div><button id="login-admin-settings" class="login-admin-icon" title="إعدادات الاتصال">⚙</button><div class="login-card glass">
+    <div class="brandline"><img class="brand-store-logo login-logo" src="" alt=""><div class="mark">M</div><div><b class="brand-store-name">Manager</b><small>ADMIN MANAGER</small></div></div>
+    <div class="eyebrow">CENTRAL OPERATOR ACCESS</div><h1>تسجيل دخول المدير</h1><p>الوصول الكامل إلى الكاشير، المخزون، الأجهزة، USB، Client Studio والإعدادات.</p>
+    <div class="server-config"><div class="eyebrow">SERVER CONNECTION <span id="login-server-status" class="status-chip offline"><span class="dot"></span> الخادم غير متصل</span></div><div id="login-server-panel" class="login-server-panel hidden"><div class="form-grid"><label>IP الخادم<input id="server-ip" value="127.0.0.1"></label><label>Port<input id="server-port" type="number" value="8787"></label></div><label>اسم المحل<input id="store-name" placeholder="اسم المحل"></label><button id="server-save" class="secondary big">حفظ واختبار الاتصال</button><div id="server-error" class="error"></div></div></div><label>اسم المستخدم<input id="login-user" autocomplete="username"></label>
+    <label>كلمة المرور<input id="login-pass" type="password" autocomplete="current-password"></label>
+    <button id="login-btn" class="primary big">دخول إلى Manager</button><div id="login-error" class="error"></div>
+    <div class="security-note">Central Server • Manager only • Session not persisted</div>
+  </div>
+</section>
+<section id="app" class="manager hidden">
+  <header class="topbar glass">
+    <div class="brandline top-brand"><img class="brand-store-logo top-logo" src="" alt=""><div class="mark small">M</div><div><b class="brand-store-name">Manager</b><small>ADMIN MANAGER • V27.5.7</small></div></div>
+    <nav id="top-nav" class="top-nav" aria-label="القوائم الرئيسية"></nav>
+    <div class="top-actions"><div class="top-search" role="search"><span>⌕</span><input id="global-search" placeholder="بحث…" aria-label="بحث داخل Manager"></div><div id="server-status" class="status-chip" title="حالة الخادم"><span class="dot"></span></div><div id="top-user" class="user-chip">Admin</div><button id="refresh-btn" class="icon-btn">↻</button><button id="fullscreen-btn" class="icon-btn">⛶</button><div class="settings-menu"><button id="top-settings-btn" class="icon-btn" title="الإعدادات">⚙</button><div id="settings-dropdown" class="settings-dropdown hidden"><button type="button" data-settings-shortcut="general"><span>⚙</span><b>النظام</b></button><button type="button" data-settings-shortcut="pos"><span>▣</span><b>POS والطباعة</b></button><button type="button" data-settings-shortcut="client"><span>◈</span><b>Client Studio</b></button><button type="button" data-settings-shortcut="branding"><span>◉</span><b>الهوية والمظهر</b></button></div></div><button id="logout-btn" class="danger-btn">خروج</button></div>
+  </header>
+  <main id="workspace" class="workspace"></main>
+</section>
+<div id="modal" class="modal hidden"><div class="modal-card glass"><div class="modal-head"><div><b id="modal-title">تحرير</b><small id="modal-subtitle">Manager</small></div><button class="icon-btn" id="modal-close">×</button></div><div id="modal-body"></div></div></div>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
