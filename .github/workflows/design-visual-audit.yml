@@ -1,0 +1,65 @@
+name: Design References Visual Audit
+
+on:
+  push:
+    paths:
+      - '.github/workflows/design-visual-audit.yml'
+      - '.github/scripts/analyze_design_references.py'
+      - 'Design_References/**/*.png'
+      - 'Design_References/**/*.PNG'
+      - 'Design_References/**/*.jpg'
+      - 'Design_References/**/*.JPG'
+      - 'Design_References/**/*.jpeg'
+      - 'Design_References/**/*.JPEG'
+      - 'Design_References/**/*.webp'
+      - 'Design_References/**/*.WEBP'
+      - 'Design_References/**/*.gif'
+      - 'Design_References/**/*.GIF'
+      - 'Design_References/**/*.bmp'
+      - 'Design_References/**/*.BMP'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: design-visual-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    name: Analyze all Design_References images
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Analyze reference images with vision API
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_VISION_MODEL: gpt-4.1-mini
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_SHA: ${{ github.sha }}
+        run: python .github/scripts/analyze_design_references.py
+
+      - name: Commit updated visual audit report
+        if: always()
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- Design_References/VISUAL_AUDIT.md)" ]; then
+            echo "Visual audit report has not changed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Design_References/VISUAL_AUDIT.md
+          git commit -m "docs: refresh Design References visual audit"
+          git push origin "HEAD:${GITHUB_REF_NAME}"

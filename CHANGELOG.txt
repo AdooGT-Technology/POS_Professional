@@ -1,3 +1,12 @@
+V27.5.10 — Automated Design References Visual Audit
+- Added a separate GitHub Actions workflow to analyze every PNG/JPG/JPEG/WEBP/GIF/BMP image under Design_References when reference images change, with a manual workflow-dispatch option.
+- Added a Python standard-library analyzer that sends each reference image to the OpenAI vision API and generates Design_References/VISUAL_AUDIT.md with Arabic per-image UX/design observations and uncertainty notes.
+- The workflow reads OPENAI_API_KEY only from GitHub Actions Secrets; no API keys or other secrets are stored in source, prompts, or generated reports.
+- The report is committed back to the same branch; the report's Markdown changes do not trigger the image-only workflow again.
+- Based directly on v27.5.9-ui-topbar-pos-fixes; no older release was used as a fallback.
+- First successful run requires adding OPENAI_API_KEY under repository Settings > Secrets and variables > Actions. Vision API usage may incur charges.
+- No application runtime modules or Server/Manager/Client behavior changed.
+
 V27.5.9 — Manager Top Bar, POS Data Lists & Design References
 - Added a GitHub Actions release workflow that automatically builds a clean versioned ZIP and publishes it as a GitHub Release whenever a semantic V27 tag (vX.Y.Z) is created.
 - Release workflow validates VERSION.txt against the tag and excludes Git metadata, virtual environments, caches, logs, and build artifacts from the release ZIP.
