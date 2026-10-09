@@ -1,6 +1,6 @@
 # Design References — Visual Audit
 
-- **Generated:** 2026-10-09 00:33 UTC
+- **Generated:** 2026-10-09 00:37 UTC
 - **Repository:** AdooGT-Technology/POS_Professional
 - **Source commit:** 5c08be6ed103e1a3a92ea1a129e5a5985ddbb3c4
 - **Vision model:** gpt-4.1-mini
@@ -50,12 +50,12 @@
 
 ## 1. Design_References/Admin Catagory menu for update games without launch games.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -63,12 +63,12 @@
 
 ## 2. Design_References/Admin client theme design ux.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -76,12 +76,12 @@
 
 ## 3. Design_References/Admin home and menu.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -89,12 +89,12 @@
 
 ## 4. Design_References/Admin home.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -102,12 +102,12 @@
 
 ## 5. Design_References/Admin manager full setting.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -115,12 +115,12 @@
 
 ## 6. Design_References/Client Games.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -128,12 +128,12 @@
 
 ## 7. Design_References/Client Reward.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -141,12 +141,12 @@
 
 ## 8. Design_References/Client Salse.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -154,12 +154,12 @@
 
 ## 9. Design_References/Login Client.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -167,12 +167,12 @@
 
 ## 10. Design_References/Manage Add Menu for games and vga to add resulation and ipade view from server to client.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -180,12 +180,12 @@
 
 ## 11. Design_References/Manager Add and manage games .jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -193,12 +193,12 @@
 
 ## 12. Design_References/Manager Build setup all games online with mklink and reg and services client.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -206,12 +206,12 @@
 
 ## 13. Design_References/Manager Build setup all games online with mklink and reg and services server.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -219,12 +219,12 @@
 
 ## 14. Design_References/Manager Build setup all games online with mklink and reg and services.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -232,12 +232,12 @@
 
 ## 15. Design_References/Manager Category add and manage App and games .jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -245,12 +245,12 @@
 
 ## 16. Design_References/Manager Fulls.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -258,12 +258,12 @@
 
 ## 17. Design_References/Manager Games and update.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -271,12 +271,12 @@
 
 ## 18. Design_References/Manager Menu PS1-PS2-PS3-PS4-PS5-Xbox-Room-TV.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -284,12 +284,12 @@
 
 ## 19. Design_References/Manager PS1-PS2-PS3-PS4-PS5-Xbox-Room-TV.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -297,12 +297,12 @@
 
 ## 20. Design_References/Manager Right click on client.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -310,12 +310,12 @@
 
 ## 21. Design_References/Manager admin fulls.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -323,12 +323,12 @@
 
 ## 22. Design_References/Manager shader games with server Ip automatic crete folder for ever client pc.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -336,12 +336,12 @@
 
 ## 23. Design_References/Manager some client.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -349,12 +349,12 @@
 
 ## 24. Design_References/Manager to managament Chrome or any webbrwoser.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -362,12 +362,12 @@
 
 ## 25. Design_References/Manager transfer file or folder between client and server rogther.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -375,12 +375,12 @@
 
 ## 26. Design_References/admin manager 6.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -388,12 +388,12 @@
 
 ## 27. Design_References/admin manager full 2.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -401,12 +401,12 @@
 
 ## 28. Design_References/admin manager full 3.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -414,12 +414,12 @@
 
 ## 29. Design_References/admin manager full.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -427,12 +427,12 @@
 
 ## 30. Design_References/client 2.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -440,12 +440,12 @@
 
 ## 31. Design_References/client 5.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -453,12 +453,12 @@
 
 ## 32. Design_References/client 6.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -466,12 +466,12 @@
 
 ## 33. Design_References/client.png
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -479,12 +479,12 @@
 
 ## 34. Design_References/manager save game location and user save logout and login from server .jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
@@ -492,12 +492,12 @@
 
 ## 35. Design_References/manager webbrowser.jpg
 
-> **تعذر التحليل:** Vision API HTTP 401: {
+> **تعذر التحليل:** Vision API HTTP 429: {
   "error": {
-    "message": "Incorrect API key provided: OPENAI_A**_KEY. You can find your API key at https://platform.openai.com/account/api-keys.",
-    "type": "invalid_request_error",
+    "message": "You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.",
+    "type": "insufficient_quota",
     "param": null,
-    "code": "invalid_api_key"
+    "code": "credit_balance_exhausted"
   }
 }
 
