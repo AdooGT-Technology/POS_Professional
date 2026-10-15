@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag to package (for example v27.5.9)'
+        description: 'Release tag to package (for example v27.6.1)'
         required: true
         type: string
 
@@ -67,6 +67,7 @@ jobs:
                '*.pyo' \
                '*.log' \
                'release/*' \
+               '27.*/*' \
                '**/node_modules/*' \
                '**/.pytest_cache/*' \
                '**/.mypy_cache/*' \

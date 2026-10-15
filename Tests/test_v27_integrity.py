@@ -1,7 +1,7 @@
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 def test_single_version_identity():
-    assert (ROOT/'VERSION.txt').read_text().strip()=='27.5.7'
+    assert (ROOT/'VERSION.txt').read_text().strip()=='27.6.1'
 def test_no_legacy_manager_launcher():
     assert not (ROOT/'Manager'/'run_manager_legacy.bat').exists()
 def test_no_duplicate_workspace_menu_labels():
@@ -62,7 +62,7 @@ def test_v2733_manager_client_control_and_lan():
     assert 'id="admin-settings-button"' not in client
     assert 'id="admin-panel"' not in client
     assert 'إعدادات الإدارة منفصلة عن واجهة العميل' not in client
-    assert 'V27.5.7' in client
+    assert 'V27.6.1' in client
     models=(ROOT/'Server'/'models.py').read_text(encoding='utf-8')
     assert 'lan_speed_mbps' in models and 'lan_adapter' in models
     agent=(ROOT/'Client'/'client_app'/'agent.py').read_text(encoding='utf-8')
@@ -132,3 +132,85 @@ def test_v2747_client_launch_accepts_legacy_catalog_ids():
     result = bridge.launch("legacy-app:steam")
     assert result["ok"] is True and result["legacy"] is True
     assert calls[0][2]["json"]["game_id"] == "steam"
+
+
+def test_release_version_is_consistent():
+    version = (ROOT / "VERSION.txt").read_text(encoding="utf-8").strip()
+    assert version == "27.6.1"
+    assert (ROOT / "Manager/VERSION.txt").read_text(encoding="utf-8").strip() == version
+    assert f'APP_VERSION = "V{version}"' in (ROOT / "Server/server_app/server.py").read_text(encoding="utf-8")
+    assert f'APP_VERSION = "V{version}"' in (ROOT / "Manager/manager_app/web_manager.py").read_text(encoding="utf-8")
+
+
+def test_python_sources_parse():
+    import ast
+
+    for path in ROOT.rglob("*.py"):
+        if "__pycache__" in path.parts:
+            continue
+        ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+
+
+def test_client_launch_uses_telemetry_and_control_runtime():
+    main = (ROOT / "Client/client_app/main.py").read_text(encoding="utf-8")
+    agent = (ROOT / "Client/client_app/agent.py").read_text(encoding="utf-8")
+    assert "from agent import ClientRuntime" in main
+    assert "from client_runtime import ClientRuntime" not in main
+    assert 'self.cfg.get("client_id") or self.cfg.get("device_id")' in agent
+    assert 'self.cfg.pop("admin_pin", None)' in agent
+    assert '"app_version":"V27.6.1"' in agent
+
+
+def test_client_command_api_contract_and_restart():
+    server = (ROOT / "Server/server_app/server.py").read_text(encoding="utf-8")
+    agent = (ROOT / "Client/client_app/agent.py").read_text(encoding="utf-8")
+    assert 'ClientControlCommand.command_id == command_id' in server
+    assert 'cmd.command != "SCREENSHOT"' in server
+    assert 'json={"command_id":cid,"image_base64":img}' in agent
+    assert '"RESTART"' in server and 'elif command=="RESTART"' in agent
+
+
+def test_manager_controls_require_shared_secret():
+    server = (ROOT / "Server/server_app/server.py").read_text(encoding="utf-8")
+    config = (ROOT / "Server/config.py").read_text(encoding="utf-8")
+    manager = (ROOT / "Manager/manager_app/web_manager.py").read_text(encoding="utf-8")
+    manager_runtime = (ROOT / "Manager/manager_app/runtime.py").read_text(encoding="utf-8")
+    manager_html = (ROOT / "Manager/manager_app/webui/index.html").read_text(encoding="utf-8")
+    server_config = (ROOT / "Server/server_config.py").read_text(encoding="utf-8")
+    assert 'hmac.compare_digest' in server and '"X-Manager-Token"' in server
+    assert 'secrets.token_urlsafe(32)' in config
+    assert '"X-Manager-Token"' in manager and 'get_manager_control_token' in manager
+    assert 'manager_control_secret.txt' in manager_runtime
+    assert 'CONFIG.update(SERVER_CONFIG)' in server_config
+    assert 'id="manager-token"' in manager_html and 'id="server-scheme"' in manager_html
+
+
+def test_manager_catalog_and_inventory_actions_are_wired():
+    js = (ROOT / "Manager/manager_app/webui/app.js").read_text(encoding="utf-8")
+    assert "function openProductForm(" in js
+    assert "function openWarehouseForm(" in js
+    assert "function contactsView(" in js and "function branchesView(" in js
+    assert "function inventoryView(" in js and "data-adjust=" in js
+
+
+def test_manager_secret_storage_does_not_modify_runtime_json(tmp_path):
+    import importlib.util
+    import sys
+
+    manager_root = str(ROOT / "Manager")
+    sys.path.insert(0, manager_root)
+    try:
+        spec = importlib.util.spec_from_file_location("manager_runtime_secret_test", ROOT / "Manager/manager_app/runtime.py")
+        module = importlib.util.module_from_spec(spec)
+        assert spec.loader is not None
+        spec.loader.exec_module(module)
+        runtime = module.ManagerRuntime.__new__(module.ManagerRuntime)
+        runtime.control_secret_file = tmp_path / "manager_control_secret.txt"
+        runtime._manager_control_token = ""
+        runtime.set_manager_control_token("test-shared-token")
+        assert runtime.get_manager_control_token() == "test-shared-token"
+        assert runtime.control_secret_file.read_text(encoding="utf-8") == "test-shared-token"
+        runtime.set_manager_control_token("")
+        assert not runtime.control_secret_file.exists()
+    finally:
+        sys.path.remove(manager_root)

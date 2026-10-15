@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#050914">
   <title>Client</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="design-pro-max.css">
 </head>
 <body class="client-logged-out">
   <div class="aurora aurora-a"></div>
@@ -15,7 +16,7 @@
   <div id="login-view" class="login-screen" role="dialog" aria-modal="true" aria-label="تسجيل دخول العميل">
     <header class="client-login-topbar">
       <div class="client-top-brand"><div class="client-top-mark">GP</div><div><b class="brand-name">متجري</b><small>PLAY • CONNECT • WIN</small></div></div>
-      <div class="client-top-actions"><button type="button" class="client-lang">◎ العربية⌄</button><span class="client-online"><i></i> Online</span><span class="client-version">V27.5.9</span><button type="button" class="client-window" onclick="toggleFullscreen()">□</button><button type="button" class="client-window" onclick="safeApi('close')?.()">×</button></div>
+      <div class="client-top-actions"><button type="button" class="client-lang" aria-label="اللغة">◎ العربية⌄</button><span class="client-online" id="header-connection"><i></i><span id="header-connection-text">جاري الاتصال</span></span><span class="client-version">V27.6.1</span><button type="button" class="client-window" onclick="toggleFullscreen()" title="ملء الشاشة" aria-label="ملء الشاشة">□</button><button type="button" class="client-window" onclick="safeApi('close')?.()" title="إغلاق" aria-label="إغلاق">×</button></div>
     </header>
     <div class="login-glow"></div>
     <div class="login-visual-copy"><div class="visual-badge">GAMING CENTER PRO</div><h2>PLAY<br><span>CONNECT</span><br>WIN</h2><p>ألعابك وتطبيقاتك وجلساتك في مكان واحد.</p><div class="visual-features"><span>⚡ أداء عالي<small>أقل زمن استجابة</small></span><span>🛡 أمان كامل<small>حماية بياناتك</small></span><span>☁ ألعاب متعددة<small>مكتبتك في مكان واحد</small></span></div></div>
@@ -30,7 +31,7 @@
       </div>
       <div class="login-badge" id="login-badge">SECURE GAMING ACCESS</div>
       <h1>ابدأ جلستك</h1>
-      <p>سجّل الدخول للوصول إلى الألعاب والتطبيقات والمحتوى المخصص لهذا الجهاز.</p>
+      <p>أدخل اسم العميل لفتح مكتبك الرقمي. الألعاب والتطبيقات والوقت المتاح تُدار بأمان من هذا الجهاز.</p>
       <label>اسم العميل<input id="customer-name" autocomplete="off" placeholder="مثال: Ahmed"></label>
       <button id="login-button" class="primary-button" type="button">دخول إلى المنصة</button>
       <div id="login-error" class="error"></div>
@@ -132,9 +133,9 @@
     </div>
 
     <footer class="statusbar panel">
-      <div><span class="footer-icon">◌</span><b>التطبيق يعمل بشكل طبيعي</b></div>
-      <div class="metrics"><span>CPU <b>34%</b></span><span>RAM <b>48%</b></span><span>GPU <b>42%</b></span><span>Disk <b>27%</b></span></div>
-      <div class="client-health"><span id="footer-connection-dot" class="status-dot"></span><span id="footer-connection-text">Client Online</span><span class="client-version">V27.5.7</span></div>
+      <div><span class="footer-icon">◌</span><b id="footer-health-text">جاري تجهيز الواجهة</b></div>
+      <div class="metrics"><span>تجربة لعب مستقرة</span><span>إدارة آمنة للجلسات</span><span>مكتبة ألعابك في مكان واحد</span></div>
+      <div class="client-health"><span id="footer-connection-dot" class="status-dot"></span><span id="footer-connection-text">Client Online</span><span class="client-version">V27.6.1</span></div>
     </footer>
   </div>
 

@@ -2,13 +2,13 @@ const state = { boot:null, active:'games', filter:'ALL', query:'', mode:'grid', 
 const $ = id => document.getElementById(id);
 const bridge = () => window.pywebview?.api;
 function toast(message){ const el=$('toast'); el.textContent=message; el.classList.add('show'); clearTimeout(window.__toast); window.__toast=setTimeout(()=>el.classList.remove('show'),2400); }
-function setStatus(text, kind='online'){ const x=$('connection-text'); if(x)x.textContent=text; const d=$('footer-connection-dot'),t=$('footer-connection-text'); if(d)d.classList.toggle('offline',kind!=='online'); if(t)t.textContent=kind==='online'?'Client Online':'Server Offline'; }
+function setStatus(text, kind='online'){ const x=$('connection-text'); if(x)x.textContent=text; const h=$('header-connection'),ht=$('header-connection-text'); if(h)h.classList.toggle('offline',kind!=='online'); if(ht)ht.textContent=kind==='online'?'متصل':'غير متصل'; const d=$('footer-connection-dot'),t=$('footer-connection-text'),f=$('footer-health-text'); if(d)d.classList.toggle('offline',kind!=='online'); if(t)t.textContent=kind==='online'?'متصل':'الخادم غير متصل'; if(f)f.textContent=kind==='online'?'واجهة العميل تعمل':'تعذر الاتصال بالخادم'; }
 function esc(s){ return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 function setBridgeStatus(text, ok=false){ const el=$('bridge-status'); if(el){el.textContent=text;el.className='bridge-status '+(ok?'ok':'');} }
 function safeApi(name){ const api=bridge(); return api && typeof api[name] === 'function' ? api[name].bind(api) : null; }
 function isAuthenticated(){ return state.authenticated === true && !!state.boot?.customer_name; }
 function requireAuthentication(){ if(isAuthenticated()) return true; state.authenticated=false; state.boot=state.boot||{}; state.boot.customer_name=''; renderLogin(); return false; }
-function setAuthenticated(value){ state.authenticated=!!value; document.body.classList.toggle('client-authenticated',state.authenticated); }
+function setAuthenticated(value){ state.authenticated=!!value; document.body.classList.toggle('client-authenticated',state.authenticated); document.body.classList.toggle('client-logged-out',!state.authenticated); }
 
 async function publicBoot(){
   const fn=safeApi('get_public_bootstrap');

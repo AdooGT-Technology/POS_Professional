@@ -1,3 +1,10 @@
+V27.6.1 — Client & Manager Pro Max UI
+- Refreshed Client and Manager web interfaces with a consistent, responsive dark visual system, improved hierarchy, controls, and focus states.
+- Client connection status now updates in the header and footer; static hardware-use percentages were removed so placeholders are not presented as live telemetry.
+- Fixed Client authentication-state styling so the logged-in workspace is revealed only after successful authentication and hidden again on logout.
+- Bumped the current release identity from 27.5.10 to 27.6.1 across Client, Manager, Server, and release checks.
+- Added the versioned source snapshot at `27.6.1/`; the next patch snapshot follows the requested 27.6.2 numbering.
+
 V27.5.10 — Automated Design References Visual Audit
 - Added a separate GitHub Actions workflow to analyze every PNG/JPG/JPEG/WEBP/GIF/BMP image under Design_References when reference images change, with a manual workflow-dispatch option.
 - Added a Python standard-library analyzer that sends each reference image to the OpenAI vision API and generates Design_References/VISUAL_AUDIT.md with Arabic per-image UX/design observations and uncertainty notes.
@@ -5,7 +12,12 @@ V27.5.10 — Automated Design References Visual Audit
 - The report is committed back to the same branch; the report's Markdown changes do not trigger the image-only workflow again.
 - Based directly on v27.5.9-ui-topbar-pos-fixes; no older release was used as a fallback.
 - First successful run requires adding OPENAI_API_KEY under repository Settings > Secrets and variables > Actions. Vision API usage may incur charges.
-- No application runtime modules or Server/Manager/Client behavior changed.
+- Fixed a Python parse error that prevented Manager from starting, made database status report the actual configured SQLite path, and ensured Server initializes from its central database URL rather than Manager defaults.
+- Client startup now launches the telemetry/control agent, preserves legacy device IDs, clears stale customer/admin state, and advertises the V27.5.10 build.
+- Repaired Client command acknowledgements and JSON screenshot uploads; the Manager-issued RESTART command is now accepted and executed only on Windows clients.
+- Manager control APIs now validate a persistent random shared token instead of trusting any caller that supplies an X-Manager-Id header; Manager stores the token in an ignored secret file and supports HTTP/HTTPS selection.
+- Added working product, customer, supplier, branch, warehouse and inventory-adjustment views, with edit/disable actions where supported.
+- Aligned current Server, Manager and Client version labels and release checks with VERSION.txt (27.5.10).
 
 V27.5.9 — Manager Top Bar, POS Data Lists & Design References
 - Added a GitHub Actions release workflow that automatically builds a clean versioned ZIP and publishes it as a GitHub Release whenever a semantic V27 tag (vX.Y.Z) is created.

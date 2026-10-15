@@ -1,9 +1,9 @@
-POS Professional V27.5.7
+# POS Professional V27.6.1
 
-Architecture: Server / Manager / Client.
+Architecture: Central Server / Manager / Customer Client.
 
-This patch is based directly on V27.5.6 and preserves existing functionality while providing a full Manager UI/UX redesign and performance pass.
+This corrective maintenance pass restores Manager startup, wires Client control and telemetry into the launched runtime, repairs command acknowledgements and screenshot uploads, and makes the product, contact, branch, warehouse, and inventory views actionable. Manager control APIs now require a persistent shared secret rather than trusting a caller-supplied Manager ID.
 
-Key changes: icon-only top navigation with compact dropdowns, search beside settings, unified Devices + Hardware cards, single Client Studio Live Preview, lightweight device API, parallel USB reads, lazy products, cached connection state, and reduced WebView2 paint cost.
+For Manager control setup, start the Server once, copy `manager_control_token` from `Server/server_config.json`, and enter it in the Manager Server Connection panel. The Manager stores it in the ignored `Manager/manager_control_secret.txt`; keep both secret files private. Choose HTTPS when using a TLS-terminating proxy on an untrusted network.
 
-Diskless/iSCSI/PXE/PXI/WriteBack/Cache are intentionally outside this project and remain excluded.
+The project continues to exclude diskless/iSCSI/PXE/PXI/WriteBack/Cache features.
