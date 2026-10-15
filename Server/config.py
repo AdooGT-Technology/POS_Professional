@@ -1,4 +1,4 @@
-import json, os
+import json, os, secrets
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -86,6 +86,14 @@ def load_server_config():
         "session_offer_bonus_minutes": 0,
     }
     data.update(_load_json(SERVER_CONFIG_FILE))
+    if not str(data.get("manager_control_token") or "").strip():
+        # A persistent shared secret protects Manager-only control APIs.
+        data["manager_control_token"] = secrets.token_urlsafe(32)
+        try:
+            save_server_config(data)
+        except OSError:
+            # Fail closed if the secret cannot be persisted; the control API will reject Managers.
+            data["manager_control_token"] = ""
     return data
 
 

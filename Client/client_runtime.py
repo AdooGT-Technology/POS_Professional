@@ -18,7 +18,7 @@ class ClientRuntime:
     def __init__(self):
         self.cfg_file = Path(__file__).resolve().parent / "client_config.json"
         self.cfg = self._load()
-        # V27.5.7: Client configuration is customer-facing only; Manager owns all administration.
+        # V27.5.10: Client configuration is customer-facing only; Manager owns all administration.
         # Remove legacy PIN/admin keys even on upgrades from older builds.
         self.cfg.pop("admin_pin", None)
         self.cfg.pop("admin_settings_enabled", None)
@@ -69,7 +69,7 @@ class ClientRuntime:
                 "device_type": self.cfg.get("device_type", "POS"),
                 "branch_id": self.cfg.get("branch_id"),
                 "warehouse_id": self.cfg.get("warehouse_id"),
-                "app_version": "V27.5.7-Client-WebView2",
+                "app_version": "V27.6.1-Client-WebView2",
                 "status": self.state if self.state in {"SYNCING", "ONLINE"} else "ONLINE",
                 "last_error": self.last_error,
             }, timeout=float(self.cfg.get("heartbeat_timeout", 3)))

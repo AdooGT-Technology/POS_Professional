@@ -1,4 +1,4 @@
-# POS Professional V20 Client
+# POS Professional V27.6.1 Client
 
 Client = Customer Face + Local Agent. The UI runs in pywebview using the EdgeChromium/WebView2 backend on Windows. Manager edits the profile, games/apps, logo, background and banners centrally through the Server API.
 

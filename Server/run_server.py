@@ -21,7 +21,7 @@ def main():
                 stdin=subprocess.DEVNULL, creationflags=creationflags
             )
         print("=" * 64, flush=True)
-        print("  POS Professional V27.5.7 - CENTRAL SERVER", flush=True)
+        print("  POS Professional V27.6.1 - CENTRAL SERVER", flush=True)
         print("=" * 64, flush=True)
         print(f"Discovery: UDP 8788 (PID {p.pid})", flush=True)
         from server_app.server import run
@@ -29,7 +29,7 @@ def main():
     except Exception as exc:
         with (LOG_DIR / "server_startup_error.log").open("a", encoding="utf-8") as f:
             traceback.print_exc(file=f)
-        print(f"POS V27.5.7 Central Server startup error: {exc}", file=sys.stderr)
+        print(f"POS V27.6.1 Central Server startup error: {exc}", file=sys.stderr)
         return 1
 
 if __name__ == "__main__":

@@ -41,5 +41,5 @@
   "server_port": 8787,
   "offline_after_seconds": 15,
   "heartbeat_seconds": 5,
-  "app_version": "V16-Manager"
+  "app_version": "V27.6.1-Manager"
 }

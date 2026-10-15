@@ -1,7 +1,7 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-title POS Professional V27.5.7 - Server Runtime Setup
+title POS Professional V27.6.1 - Server Runtime Setup
 python -u setup_runtime.py
 set "EC=%ERRORLEVEL%"
 echo.

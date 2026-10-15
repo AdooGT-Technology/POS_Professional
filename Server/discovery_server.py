@@ -29,7 +29,7 @@ def run():
         try:
             msg = json.loads(data.decode("utf-8"))
             if msg.get("type") != "POS_DISCOVER": continue
-            answer = {"type": "POS_SERVER", "host": _server_ip(addr), "port": int(SERVER_CONFIG.get("server_port", 8787)), "version": "V21"}
+            answer = {"type": "POS_SERVER", "host": _server_ip(addr), "port": int(SERVER_CONFIG.get("server_port", 8787)), "version": "V27.6.1"}
             sock.sendto(json.dumps(answer, ensure_ascii=False).encode("utf-8"), addr)
         except Exception:
             continue

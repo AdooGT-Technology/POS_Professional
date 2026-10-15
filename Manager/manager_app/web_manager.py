@@ -63,7 +63,7 @@ from services import (
 )
 
 WEB_UI_DIR = Path(__file__).resolve().parent / "webui"
-APP_VERSION = "V27.5.7"
+APP_VERSION = "V27.6.1"
 
 MANAGER_MENU = [
     ("__HOME_DIRECT__", [("home", "⌂", "الرئيسية", "مركز التشغيل والملخص الحي")]),
@@ -127,7 +127,11 @@ class ManagerWebAPI:
         return url.rstrip("/")
 
     def _headers(self) -> dict[str, str]:
-        return {"X-Manager-Id": str(self._runtime.device_id), "X-Manager-Version": APP_VERSION}
+        headers = {"X-Manager-Id": str(self._runtime.device_id), "X-Manager-Version": APP_VERSION}
+        token = self._runtime.get_manager_control_token()
+        if token:
+            headers["X-Manager-Token"] = token
+        return headers
 
     def _get_json(self, url: str, *, timeout: float = 5, headers: dict[str, str] | None = None, label: str = "Server"):
         """GET JSON without allowing an HTML/proxy/error page to crash pywebview."""
@@ -155,19 +159,41 @@ class ManagerWebAPI:
     def configure_server(self, payload: dict[str, Any]):
         host=str((payload or {}).get('ip') or '').strip()
         port=int((payload or {}).get('port') or 8787)
+        scheme=str((payload or {}).get('scheme') or 'http').strip().lower()
         store=str((payload or {}).get('store_name') or '').strip()
-        if not host: return {"ok":False,"error":"أدخل IP الخادم."}
+        manager_token=str((payload or {}).get('manager_token') or '').strip()
+        if not host: return {"ok":False,"error":"أدخل عنوان الخادم."}
+        if '://' in host: return {"ok":False,"error":"أدخل اسم المضيف أو IP دون http:// أو https://."}
+        if scheme not in {'http','https'}: return {"ok":False,"error":"بروتوكول الخادم غير صالح."}
         if not (1 <= port <= 65535): return {"ok":False,"error":"البورت غير صحيح."}
-        self._runtime.server_url=f"http://{host}:{port}"
+        self._runtime.server_url=f"{scheme}://{host}:{port}"
+        self._runtime.server_scheme=scheme
+        self._runtime.cfg["server_scheme"]=scheme
         self._runtime.cfg["server_url"]=self._runtime.server_url
         self._runtime.cfg["server_ip"]=host
         self._runtime.cfg["server_port"]=port
         self._runtime.cfg["store_name"]=store
+        if manager_token:
+            self._runtime.set_manager_control_token(manager_token)
         self._runtime._save()
         CONFIG["store_name"]=store or CONFIG.get("store_name","متجري")
         save_config(CONFIG)
         connected = self._runtime.heartbeat_once()
-        return {"ok":True,"connected":bool(connected),"server_url":self._runtime.server_url,"store_name":CONFIG["store_name"],"error":self._runtime.last_error if not connected else ""}
+        control_authenticated = False
+        control_error = ""
+        if connected:
+            try:
+                check = requests.get(self._runtime.server_url + "/api/v19/control/clients", headers=self._headers(), timeout=4)
+                if check.status_code in {401, 403}:
+                    control_error = "الخادم متصل، لكن رمز التحكم مفقود أو غير صحيح."
+                else:
+                    check.raise_for_status()
+                    control_authenticated = True
+            except Exception as exc:
+                control_error = str(exc)[:500]
+        else:
+            control_error = self._runtime.last_error
+        return {"ok":True,"connected":bool(connected),"control_authenticated":control_authenticated,"server_url":self._runtime.server_url,"store_name":CONFIG["store_name"],"error":control_error}
 
     def login(self, payload: dict[str, Any]):
         username = str((payload or {}).get("username") or "").strip()
@@ -461,8 +487,8 @@ class ManagerWebAPI:
 
     def migrate_database(self):
         self._ensure_auth(); from db import init_db; started=datetime.now(); init_db()
-        with SessionLocal.begin() as ss: ss.add(MigrationRun(revision="V27.5.7",status="SUCCESS",backup_path="",restore_test_status="NOT_REQUIRED",started_at=started,finished_at=datetime.now(),details="Schema reconciliation from Manager Database Center"))
-        return {"ok":True,"revision":"V27.5.7","status":"SUCCESS"}
+        with SessionLocal.begin() as ss: ss.add(MigrationRun(revision=APP_VERSION,status="SUCCESS",backup_path="",restore_test_status="NOT_REQUIRED",started_at=started,finished_at=datetime.now(),details="Schema reconciliation from Manager Database Center"))
+        return {"ok":True,"revision":APP_VERSION,"status":"SUCCESS"}
 
     def pick_path(self, kind="file"):
         self._ensure_auth()
@@ -496,8 +522,13 @@ class ManagerWebAPI:
 
     def database_status(self):
         self._ensure_auth()
-        db_path = Path(__file__).resolve().parents[2] / "pos_v7.db"
-        result = {"ok": False, "connected": False, "path": str(db_path), "exists": db_path.exists(), "size_bytes": db_path.stat().st_size if db_path.exists() else 0, "server_url": self._runtime.server_url, "store_name": CONFIG.get("store_name", "")}
+        database = engine.url.database or ""
+        db_path = Path(database).expanduser() if engine.dialect.name == "sqlite" and database not in {"", ":memory:"} else None
+        if db_path is not None and not db_path.is_absolute():
+            # SQLAlchemy resolves sqlite:///relative.db against the process working directory.
+            db_path = Path.cwd() / db_path
+        db_exists = bool(db_path and db_path.is_file())
+        result = {"ok": False, "connected": False, "path": str(db_path) if db_path else str(engine.url), "exists": db_exists, "size_bytes": db_path.stat().st_size if db_exists else 0, "server_url": self._runtime.server_url, "store_name": CONFIG.get("store_name", "")}
         try:
             with engine.connect() as conn:
                 conn.execute(text("SELECT 1"))
@@ -767,8 +798,9 @@ def main(runtime) -> int:
         webview.settings["ALLOW_FILE_URLS"] = True
     except Exception:
         pass
+    store_name = str(CONFIG.get("store_name") or "Manager")
     window = webview.create_window(
-        f"{CONFIG.get("store_name", "Manager")} — Manager V27.5.7",
+        f"{store_name} — Manager {APP_VERSION}",
         html.as_uri(),
         js_api=api,
         width=1600,

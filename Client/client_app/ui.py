@@ -27,7 +27,7 @@ class ClientShell(tk.Tk):
         self.server_url = server_url.rstrip("/")
         self.session_token = None
         self.customer_name = ""
-        self.title("POS Professional V27.5.7 Client")
+        self.title("POS Professional V27.6.1 Client")
         self.geometry("1420x900")
         self.minsize(1100, 720)
         self.configure(bg=BG)

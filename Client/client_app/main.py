@@ -13,7 +13,7 @@ if code is not None:
     raise SystemExit(code)
 os.environ["POS_ROLE"] = "CLIENT"
 
-from client_runtime import ClientRuntime
+from agent import ClientRuntime
 from webview_client import run_webview_client
 from usb_monitor import USBMonitor
 

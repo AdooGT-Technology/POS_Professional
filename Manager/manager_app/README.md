@@ -1,4 +1,4 @@
-# POS Professional V16 Manager
+# POS Professional V27.6.1 Manager
 
 The Manager is the operator application. It contains POS, cashbox, inventory, users, reports, settings, client control, HA and all single-workspace V7-V14 management screens.
 

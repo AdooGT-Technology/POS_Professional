@@ -4,6 +4,7 @@ import logging
 import os
 import base64
 import hashlib
+import hmac
 import json
 import threading
 import webbrowser
@@ -33,13 +34,13 @@ from client_ui_v18 import get_profile, save_profile, list_items, list_all_items,
 from esports_service import snapshot as esports_snapshot, save_provider as esports_save_provider, save_game as esports_save_game, toggle_game as esports_toggle_game, sync_game as esports_sync_game, client_catalog as esports_client_catalog
 
 LOGGER = logging.getLogger("pos.v18.server")
-APP_VERSION = "V27.5.7"
-SERVER_BUILD = "V27.5.7-Server-Esports-USB-HA"
-app = FastAPI(title="POS Professional V27 Central Server", version="V27")
+APP_VERSION = "V27.6.1"
+SERVER_BUILD = "V27.6.1-Server-Esports-USB-HA"
+app = FastAPI(title="POS Professional V27.6.1 Central Server", version="27.6.1")
 
-CONTROL_COMMANDS = {"LOCK", "SESSION_PAUSE", "SCREENSHOT", "REFRESH_UI", "TASK_EXECUTE"}
+CONTROL_COMMANDS = {"LOCK", "SESSION_PAUSE", "SCREENSHOT", "REFRESH_UI", "TASK_EXECUTE", "RESTART"}
 
-# V27.5.7 persistent Manager libraries.
+# V27.5.10 persistent Manager libraries.
 GAME_LIBRARY_FILE = ROOT / "game_library_v27.json"
 CLIENT_RUNTIME_STATE_FILE = ROOT / "client_runtime_state_v27.json"
 TASK_LIBRARY_FILE = ROOT / "task_library_v27.json"
@@ -89,9 +90,13 @@ def _control_requires_https(request: Request):
 
 def _require_manager_control(request: Request):
     _control_requires_https(request)
+    expected = str(SERVER_CONFIG.get("manager_control_token") or "")
+    provided = str(request.headers.get("X-Manager-Token") or "")
+    if not expected or not hmac.compare_digest(expected.encode("utf-8"), provided.encode("utf-8")):
+        raise HTTPException(401, "Invalid Manager control token")
     manager_id = (request.headers.get("X-Manager-Id") or "").strip()
     if not manager_id:
-        raise HTTPException(401, "Manager authentication required")
+        raise HTTPException(401, "Manager identity required")
     return manager_id
 
 def _token_from_request(request: Request) -> str:
@@ -448,7 +453,7 @@ def client_ui_bootstrap(device_id: str):
                 items.append({"id": f"legacy-app:{item.get('id')}", "item_type": "APP", "name": item.get("name", "App"), "description": item.get("category", ""), "icon_asset": "", "icon_url": "", "poster_url": "", "launch_type": "LEGACY_APP", "target": str(item.get("id", "")), "args": "", "working_dir": "", "enabled": True, "sort_order": 0})
         except Exception:
             items = []
-    return {"version": "V27.5.7", "client_id": device_id, "store_name": SERVER_CONFIG.get("store_name", "متجري"), "store_logo": SERVER_CONFIG.get("store_logo_data", ""), "profile": profile, "items": items, "banners": banners, "esports": esports_client_catalog()}
+    return {"version": "V27.6.1", "client_id": device_id, "store_name": SERVER_CONFIG.get("store_name", "متجري"), "store_logo": SERVER_CONFIG.get("store_logo_data", ""), "profile": profile, "items": items, "banners": banners, "esports": esports_client_catalog()}
 
 
 @app.get("/api/v27/game-library")
@@ -671,12 +676,12 @@ class V19CommandRequest(BaseModel):
     payload: dict = {}
 
 class V19ScreenUpload(BaseModel):
-    command_id: str = ""
-    image_base64: str = ""
+    command_id: str = Field(min_length=1, max_length=80)
+    image_base64: str = Field(min_length=1, max_length=7_000_000)
 
 class V19CommandAck(BaseModel):
     status: str = "SUCCESS"
-    result: dict = {}
+    result: dict = Field(default_factory=dict)
 
 class V19ClientProfileRequest(BaseModel):
     room_name: str = ""
@@ -963,12 +968,12 @@ def v19_client_register(device_id: str, payload: V19ClientRegister, request: Req
     with dbmod.SessionLocal.begin() as session:
         device = session.scalar(select(Device).where(Device.device_uuid == device_id))
         if not device:
-            device = Device(device_uuid=device_id, device_name=(payload.device_name or device_id)[:150], device_type=payload.device_type or "CLIENT", app_version=payload.app_version or "V27.5.7", ip_address=str(request.client.host if request.client else "")[:64])
+            device = Device(device_uuid=device_id, device_name=(payload.device_name or device_id)[:150], device_type=payload.device_type or "CLIENT", app_version=payload.app_version or "V27.6.1", ip_address=str(request.client.host if request.client else "")[:64])
             session.add(device); session.flush()
         else:
             device.device_name = (payload.device_name or device.device_name)[:150]
             device.device_type = payload.device_type or "CLIENT"
-            device.app_version = payload.app_version or "V27.5.7"
+            device.app_version = payload.app_version or "V27.6.1"
             device.ip_address = str(request.client.host if request.client else "")[:64]
             device.last_seen_at = datetime.now()
         _ensure_control_profile(session, device_id)
@@ -989,10 +994,13 @@ def v19_client_poll(device_id: str, request: Request):
 @app.post("/api/v19/client/{device_id}/commands/{command_id}/ack")
 def v19_client_ack(device_id: str, command_id: str, payload: V19CommandAck, request: Request):
     _require_client_token(device_id, request)
+    status = str(payload.status or "").upper().strip()
+    if status not in {"SUCCESS", "OK", "FAILED", "ERROR"}:
+        raise HTTPException(400, "Invalid command status")
     with dbmod.SessionLocal.begin() as session:
-        row = session.scalar(select(ClientControlCommand).where(ClientControlCommand.command_id == payload.command_id, ClientControlCommand.device_id == device_id))
+        row = session.scalar(select(ClientControlCommand).where(ClientControlCommand.command_id == command_id, ClientControlCommand.device_id == device_id))
         if row is None: raise HTTPException(404, "command not found")
-        row.status = "SUCCESS" if str(payload.status).upper() in {"SUCCESS", "OK"} else "FAILED"
+        row.status = "SUCCESS" if status in {"SUCCESS", "OK"} else "FAILED"
         row.result_json = json.dumps(payload.result or {}, ensure_ascii=False)
         row.executed_at = datetime.now()
     return {"ok": True}
@@ -1033,11 +1041,12 @@ def v19_client_screen(device_id: str, payload: V19ScreenUpload, request: Request
         raise HTTPException(413, "Snapshot exceeds 5MB")
     _purge_old_snapshots()
     with dbmod.SessionLocal.begin() as session:
-        snap = ClientScreenSnapshot(device_id=device_id, command_id=payload.command_id[:80], mime_type="image/jpeg", image_bytes=raw)
+        cmd = session.scalar(select(ClientControlCommand).where(ClientControlCommand.command_id == payload.command_id, ClientControlCommand.device_id == device_id))
+        if cmd is None or cmd.command != "SCREENSHOT":
+            raise HTTPException(404, "screenshot command not found")
+        snap = ClientScreenSnapshot(device_id=device_id, command_id=payload.command_id, mime_type="image/jpeg", image_bytes=raw)
         session.add(snap); session.flush()
-        cmd = session.scalar(select(ClientControlCommand).where(ClientControlCommand.command_id == payload.command_id, ClientControlCommand.device_id == device_id)) if command_id else None
-        if cmd:
-            cmd.status = "SUCCESS"; cmd.executed_at = datetime.now(); cmd.result_json=json.dumps({"snapshot_id": snap.id}, ensure_ascii=False)
+        cmd.status = "SUCCESS"; cmd.executed_at = datetime.now(); cmd.result_json=json.dumps({"snapshot_id": snap.id}, ensure_ascii=False)
         return {"ok": True, "snapshot_id": snap.id, "created_at": snap.created_at.isoformat()}
 
 @app.get("/api/v19/control/clients/{device_id}/snapshot/latest")

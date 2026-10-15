@@ -1,3 +1,46 @@
+V27.6.1 — Client & Manager Pro Max UI
+- Refreshed Client and Manager web interfaces with a consistent, responsive dark visual system, improved hierarchy, controls, and focus states.
+- Client connection status now updates in the header and footer; static hardware-use percentages were removed so placeholders are not presented as live telemetry.
+- Fixed Client authentication-state styling so the logged-in workspace is revealed only after successful authentication and hidden again on logout.
+- Bumped the current release identity from 27.5.10 to 27.6.1 across Client, Manager, Server, and release checks.
+- Preserved the pre-update source under `Archive/27.5.10/` and placed the current clean snapshot under `Release/27.6.1/`; release snapshots omit `Design_References`, databases, credentials, and nested older-version folders.
+- The next patch snapshot will be `Release/27.6.2/`.
+
+V27.5.10 — Automated Design References Visual Audit
+- Added a separate GitHub Actions workflow to analyze every PNG/JPG/JPEG/WEBP/GIF/BMP image under Design_References when reference images change, with a manual workflow-dispatch option.
+- Added a Python standard-library analyzer that sends each reference image to the OpenAI vision API and generates Design_References/VISUAL_AUDIT.md with Arabic per-image UX/design observations and uncertainty notes.
+- The workflow reads OPENAI_API_KEY only from GitHub Actions Secrets; no API keys or other secrets are stored in source, prompts, or generated reports.
+- The report is committed back to the same branch; the report's Markdown changes do not trigger the image-only workflow again.
+- Based directly on v27.5.9-ui-topbar-pos-fixes; no older release was used as a fallback.
+- First successful run requires adding OPENAI_API_KEY under repository Settings > Secrets and variables > Actions. Vision API usage may incur charges.
+- Fixed a Python parse error that prevented Manager from starting, made database status report the actual configured SQLite path, and ensured Server initializes from its central database URL rather than Manager defaults.
+- Client startup now launches the telemetry/control agent, preserves legacy device IDs, clears stale customer/admin state, and advertises the V27.5.10 build.
+- Repaired Client command acknowledgements and JSON screenshot uploads; the Manager-issued RESTART command is now accepted and executed only on Windows clients.
+- Manager control APIs now validate a persistent random shared token instead of trusting any caller that supplies an X-Manager-Id header; Manager stores the token in an ignored secret file and supports HTTP/HTTPS selection.
+- Added working product, customer, supplier, branch, warehouse and inventory-adjustment views, with edit/disable actions where supported.
+- Aligned current Server, Manager and Client version labels and release checks with VERSION.txt (27.5.10).
+
+V27.5.9 — Manager Top Bar, POS Data Lists & Design References
+- Added a GitHub Actions release workflow that automatically builds a clean versioned ZIP and publishes it as a GitHub Release whenever a semantic V27 tag (vX.Y.Z) is created.
+- Release workflow validates VERSION.txt against the tag and excludes Git metadata, virtual environments, caches, logs, and build artifacts from the release ZIP.
+- Added a dedicated Design_References folder for UI/UX screenshots and visual references used during future design work.
+- Increased Manager top-bar navigation icons to a spacious 64x64 desktop size with clearer spacing and responsive reductions on smaller screens.
+- Top-bar dropdown menus now open automatically on hover and remain open while the pointer moves into the dropdown; they close shortly after leaving the menu area.
+- Fixed Manager POS/product/sales-style data pages failing to render because the shared simpleTable renderer was missing.
+- Added a resilient table renderer with Arabic column labels, status badges, numeric formatting, empty-state handling, and safe object values.
+- Updated Manager and Client runtime/version markers to V27.5.9.
+- V27.5.8 authentication behavior remains preserved.
+
+V27.5.8 — Client Login Screen Authentication
+- Client login is now a real authenticated UI state; the post-login workspace is inaccessible while logged out.
+- Prevented scrolling/visual exposure of the authenticated Client workspace before login.
+- Added centralized authentication guards to protected sections, catalog rendering, game selection, launch, refresh, and status polling.
+- Login now explicitly establishes the authenticated Client state only after Server authentication succeeds.
+- Logout clears the Client authentication state and returns to the isolated Login Screen.
+- Refresh/reload starts in the logged-out state; the Client does not restore the previous customer session.
+- Added browser-history/hash protection so navigation cannot be used to bypass the Login Screen.
+- Updated active Client release marker to V27.5.8.
+
 V27.5.7 — Full Manager UI/UX redesign + performance optimization
 
 - Rebuilt the Manager visual system as one coherent layout: separated store branding, icon-only primary navigation, compact dropdown groups, and search inside the top action bar beside Settings.

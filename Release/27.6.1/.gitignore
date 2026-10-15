@@ -1,0 +1,8 @@
+Manager/manager_config.json
+Manager/manager_control_secret.txt
+Server/server_config.json
+Server/config.json
+Client/client_app/client_config.json
+__pycache__/
+*.py[cod]
+.pytest_cache/

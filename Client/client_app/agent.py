@@ -23,15 +23,22 @@ class ClientRuntime:
     def __init__(self):
         self.cfg_file = Path(__file__).resolve().parent / "client_config.json"
         self.cfg = self._load()
-        self.device_id = self.cfg.get("device_id") or str(uuid.uuid4())
+        # Preserve IDs written by both the current and legacy Client configs.
+        self.device_id = self.cfg.get("client_id") or self.cfg.get("device_id") or str(uuid.uuid4())
+        self.cfg["client_id"] = self.device_id
         self.cfg["device_id"] = self.device_id
+        self.cfg.pop("admin_pin", None)
+        self.cfg.pop("admin_settings_enabled", None)
+        # A Client restart must always return to the customer login screen.
+        self.cfg["current_customer"] = ""
+        self.cfg["session_paused"] = False
         self.cfg["device_name"] = self.cfg.get("device_name") or socket.gethostname()
         self.state = "OFFLINE"
         self.last_error = ""
         self.last_heartbeat = None
         self.server_url = str(self.cfg.get("server_url") or "").rstrip("/")
         self.control_token = str(self.cfg.get("device_token") or "")
-        self.session_paused = bool(self.cfg.get("session_paused", False))
+        self.session_paused = False
         self.stop_event = threading.Event()
         self._thread = None
         self._save()
@@ -62,7 +69,7 @@ class ClientRuntime:
         url = self.ensure_server()
         if not url: return False
         try:
-            response = requests.post(url + f"/api/v19/client/{self.device_id}/register", json={"device_name":self.cfg["device_name"],"device_type":"CLIENT","app_version":"V27.5.7"}, timeout=4)
+            response = requests.post(url + f"/api/v19/client/{self.device_id}/register", json={"device_name":self.cfg["device_name"],"device_type":"CLIENT","app_version":"V27.6.1"}, timeout=4)
             response.raise_for_status(); data=response.json(); token=str(data.get("device_token") or "")
             if token:
                 self.control_token=token; self.cfg["device_token"]=token; self._save()
@@ -186,7 +193,15 @@ class ClientRuntime:
                     elif command=="REFRESH_UI":
                         self.cfg["ui_refresh_requested"]=True; self._save(); result={"refresh_requested":True}
                     elif command=="SCREENSHOT":
-                        img=self._capture_screen(); up=requests.post(self.server_url+f"/api/v19/client/{self.device_id}/screen", headers={"X-Device-Token":self.control_token}, params={"command_id":cid,"image_base64":img}, timeout=12); up.raise_for_status(); result=up.json()
+                        img=self._capture_screen(); up=requests.post(self.server_url+f"/api/v19/client/{self.device_id}/screen", headers={"X-Device-Token":self.control_token}, json={"command_id":cid,"image_base64":img}, timeout=12); up.raise_for_status(); result=up.json()
+                    elif command=="RESTART":
+                        if os.name != "nt":
+                            raise RuntimeError("Remote restart is supported only on Windows clients")
+                        import subprocess as _subprocess
+                        completed = _subprocess.run(["shutdown.exe", "/r", "/t", "5"], capture_output=True, text=True, timeout=8)
+                        if completed.returncode:
+                            raise RuntimeError((completed.stderr or completed.stdout or "Restart request failed").strip())
+                        result={"restart_scheduled":True}
                     elif command=="TASK_EXECUTE":
                         pay=cmd.get("payload") or {}; target=str(pay.get("path") or '').strip(); args=str(pay.get("arguments") or '').strip(); cwd=str(pay.get("working_dir") or '').strip() or None; task_type=str(pay.get("type") or 'PROCESS').upper(); service=str(pay.get("service") or '').strip(); service_action=str(pay.get("service_action") or 'start').lower()
                         import subprocess as _subprocess
@@ -230,7 +245,7 @@ class ClientRuntime:
                 "device_type": self.cfg.get("device_type", "POS"),
                 "branch_id": self.cfg.get("branch_id"),
                 "warehouse_id": self.cfg.get("warehouse_id"),
-                "app_version": "V21",
+                "app_version": "V27.6.1-Client",
                 "status": self.state if self.state in {"SYNCING", "ONLINE"} else "ONLINE",
                 "last_error": self.last_error,
             }, timeout=float(self.cfg.get("heartbeat_timeout", 3)))
