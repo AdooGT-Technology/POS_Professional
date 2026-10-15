@@ -67,7 +67,8 @@ jobs:
                '*.pyo' \
                '*.log' \
                'release/*' \
-               '27.*/*' \
+               'Archive/*' \
+               'Release/*' \
                '**/node_modules/*' \
                '**/.pytest_cache/*' \
                '**/.mypy_cache/*' \

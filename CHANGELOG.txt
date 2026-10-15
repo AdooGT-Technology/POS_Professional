@@ -3,7 +3,8 @@ V27.6.1 — Client & Manager Pro Max UI
 - Client connection status now updates in the header and footer; static hardware-use percentages were removed so placeholders are not presented as live telemetry.
 - Fixed Client authentication-state styling so the logged-in workspace is revealed only after successful authentication and hidden again on logout.
 - Bumped the current release identity from 27.5.10 to 27.6.1 across Client, Manager, Server, and release checks.
-- Added the versioned source snapshot at `27.6.1/`; the next patch snapshot follows the requested 27.6.2 numbering.
+- Preserved the pre-update source under `Archive/27.5.10/` and placed the current clean snapshot under `Release/27.6.1/`; release snapshots omit `Design_References`, databases, credentials, and nested older-version folders.
+- The next patch snapshot will be `Release/27.6.2/`.
 
 V27.5.10 — Automated Design References Visual Audit
 - Added a separate GitHub Actions workflow to analyze every PNG/JPG/JPEG/WEBP/GIF/BMP image under Design_References when reference images change, with a manual workflow-dispatch option.

@@ -1,0 +1,15 @@
+SQLAlchemy>=2.0,<3
+Alembic>=1.13,<2
+PyMySQL>=1.1,<2
+pyodbc>=5.1,<6
+openpyxl>=3.1,<4
+reportlab>=4.0,<5
+arabic-reshaper>=3.0,<4
+python-bidi>=0.4,<1
+pywin32>=306; platform_system == "Windows"
+APScheduler>=3.10,<4
+requests>=2.31,<3
+pywebview==6.2.1
+
+pythonnet==3.2.0
+clr-loader==0.3.1

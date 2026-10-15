@@ -1,8 +1,9 @@
-# Version snapshot policy
+# Version and snapshot policy
 
-- The repository root is the canonical source tree for the current release.
-- Keep the root `VERSION.txt`, `Manager/VERSION.txt`, runtime version markers, and release checks synchronized.
-- For every accepted update, create a top-level folder named exactly for the new version and copy the matching source snapshot into it. Do not nest older version folders inside a new snapshot.
-- This release is `27.6.1`, based on `27.5.10`; the next patch release is `27.6.2`.
-- Version snapshots must not include `.git`, local credentials/configuration, runtime SQLite databases, caches, build artifacts, or generated audit reports. Keep source, tests, documentation, and tracked design references.
-- The release ZIP workflow excludes version snapshot folders so a release package does not contain a second copy of the project.
+- The repository root is the canonical source tree for the current release. Keep `VERSION.txt`, `Manager/VERSION.txt`, runtime markers, and release checks synchronized.
+- Preserve the previous release as a source snapshot under `Archive/<previous-version>/`. For this update, `Archive/27.5.10/` records the project state before the 27.6.1 UI/version update.
+- Store each current release under `Release/<version>/`. For this update, the clean snapshot is `Release/27.6.1/`.
+- A `Release/<version>/` snapshot must not include `Design_References`, `Archive`, `Release`, or any older version folders. Archive snapshots also omit `Design_References` to avoid duplicating design-only assets.
+- Do not copy `.git`, local credentials/configuration, runtime SQLite databases, caches, build outputs, or generated audit reports into snapshots. Keep source, tests, and documentation.
+- The next patch snapshot is `Release/27.6.2/`; do not nest prior snapshots inside it.
+- The GitHub release ZIP workflow excludes `Archive/` and `Release/` so packages contain only the canonical source tree.
